@@ -1,26 +1,4 @@
-;; This is a "run commands" file for my emacs config
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/") t)
-
-(require 'package)
-(require 'use-package)
-(setq use-package-always-ensure t)
-
 ;;; packages / dependencies installs
-(use-package eglot
-  :ensure nil
-  :hook ((c-mode c++-mode c-ts-mode c++-ts-mode python-mode) . eglot-ensure)
-  :config
-  (setf (alist-get '(c-mode c++-mode c-ts-mode c++-ts-mode)
-                 eglot-server-programs nil nil #'equal)
-	'("clangd" "--background-index" "--clang-tidy" "--header-insertion=never")))
-(setq-default eglot-workspace-configuration
-	      '(:clangd (:completion (:detailedLabel t))))
-
-(global-set-key (kbd "C-c a") 'eglot-code-actions)
-(use-package eldoc-box)
-
-
 (setq treesit-language-source-alist '((cpp "https://github.com/tree-sitter/tree-sitter-cpp")))
 
 (use-package markdown-mode)
@@ -63,6 +41,9 @@
   (text-mode-ispell-word-completion nil)
   ;; hide commands in M-x that don't apply to the current mode 
   (read-extended-command-predicate #'command-completion-default-include-p))
+
+(with-eval-after-load 'cc-mode
+  (define-key c-mode-base-map (kbd "TAB") #'indent-for-tab-command))
 
 (use-package vterm)
 
