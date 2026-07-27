@@ -30,3 +30,7 @@
 (require 'rush-emacs-fsbs)
 (require 'rush-emacs-theming)
 (require 'rush-emacs-rc)
+(require 'rush-emacs-debug)
+(require 'rush-emacs-modeline)
+(require 'rush-emacs-bolt)
+(require 'rush-emacs-window)
