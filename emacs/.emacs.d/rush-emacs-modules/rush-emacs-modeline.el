@@ -1,6 +1,6 @@
 ;; This module was developed using prot's guide "Emacs: write a custom mode line"
 ;; basic modeline idea:
-;; file modified indication : buffer name : flymake details : vc details : date and timea
+;; file modified indication : buffer name : flymake details : vc details : date and time
 (defvar-local rush-modeline-bufname
     '(:eval (propertize (buffer-name) 'face 'bold))
   "Modeline construct to display the buffer name")
@@ -60,7 +60,6 @@
   (put locals 'risky-local-variable t))
 
 ;; TODO: get flymake diagnostics in modeline
-;; TODO: get VC details in modeline
 (setq-default mode-line-right-align-edge 'right-fringe)
 
 (setq-default mode-line-format

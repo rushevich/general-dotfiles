@@ -1,5 +1,5 @@
 # Created by `pipx` on 2026-05-19 01:03:16
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH:/Users/rushevichg/.local/bin:/Users/rushevichg/scripts"
+export PATH="/opt/X11/bin:/opt/homebrew/opt/llvm/bin:$PATH:/Users/rushevichg/.local/bin:/Users/rushevichg/scripts"
 export CPPFLAGS="I/opt/homebrew/opt/llvm/include"
 export LDFLAGS="L/opt/homebrew/opt/llvm/lib"
 

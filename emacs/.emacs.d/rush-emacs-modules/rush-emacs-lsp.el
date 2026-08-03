@@ -2,7 +2,7 @@
 ;; TODO: add configuration for other LSPs
 (use-package eglot
   :bind (:map eglot-mode-map
-	      ("C-c C-a" . eglot-code-action))
+	      ("C-c C-a" . eglot-code-actions))
   :hook ((c-mode c++-mode c-ts-mode c++-ts-mode python-mode) . eglot-ensure)
   :config
   (setf (alist-get '(c-mode c++-mode c-ts-mode c++-ts-mode)
