@@ -1,7 +1,16 @@
+(require 'package)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
-(setq use-package-always-ensure t)
 (package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
+  (package-install 'use-package))
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 (add-to-list 'load-path (locate-user-emacs-file "rush-emacs-modules"))
 
 (setq custom-file (make-temp-file "emacs-custom-"))

@@ -3,10 +3,6 @@
 
 (use-package markdown-mode)
 
-
-
-(use-package vterm)
-
 (use-package flymake
   :hook (prog-mode . flymake-mode)
   :config
