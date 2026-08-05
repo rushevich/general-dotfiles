@@ -49,3 +49,4 @@
 (require 'rush-emacs-window)
 (require 'rush-emacs-comp)
 (require 'rush-emacs-git)
+(require 'rush-emacs-electric)
