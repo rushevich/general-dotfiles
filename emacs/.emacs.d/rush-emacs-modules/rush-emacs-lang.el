@@ -7,7 +7,9 @@
   (define-key c-mode-base-map (kbd "TAB") #'indent-for-tab-command)
   (setq c-basic-offset 4))
 
+(use-package nix-mode)
+
 ;;; all modes
-(add-hook 'prog-mode-hook #'smartparens-mode)
+;; (add-hook 'prog-mode-hook #'smartparens-mode)
 
 (provide 'rush-emacs-lang)

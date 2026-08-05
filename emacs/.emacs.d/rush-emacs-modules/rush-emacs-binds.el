@@ -11,6 +11,11 @@
   (set-mark-command nil)
   (move-end-of-line nil))
 
+(defun buffer-to-kill-ring ()
+  (interactive)
+  (kill-ring-save (point-min) (point-max)))
+
 (global-set-key (kbd "C-;") 'select-line)
+(global-set-key (kbd "C-c M-w") 'buffer-to-kill-ring)
 
 (provide 'rush-emacs-binds)

@@ -35,7 +35,7 @@
 
 (defun rush-modeline--vc-branch ()
   "Returns the current branch name of the project containing buffer/file"
-  (concat " :: " (propertize (concat "⎇" (car (vc-git-branches))) 'face 'success)))
+  (concat " :: " (propertize (concat " " (car (vc-git-branches))) 'face 'success)))
 
 (defun rush-modeline--vc-tracked ()
   "Returns non-nil if the current file/buffer is tracked"
@@ -44,7 +44,7 @@
 (defun rush-modeline--vc-info ()
   (cond
    ((not (rush-modeline--vc-managed)) "")
-   ((not (rush-modeline--vc-tracked)) (concat (rush-modeline--vc-branch) (propertize " UT*" 'face 'warning)))
+   ((not (rush-modeline--vc-tracked)) (concat (rush-modeline--vc-branch) (propertize " UT" 'face 'warning)))
    (t (rush-modeline--vc-branch))))
 
 (defvar-local rush-modeline-vc-info
