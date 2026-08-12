@@ -36,7 +36,7 @@
 (add-to-list 'default-frame-alist `(fullscreen . maximized))
 
 (load-theme 'blue-dark t)
-(require 'rush-emacs-lang)
+(require 'rush-emacs-modes)
 (require 'rush-emacs-dired)
 (require 'rush-emacs-org)
 (require 'rush-emacs-lsp)
@@ -50,3 +50,5 @@
 (require 'rush-emacs-comp)
 (require 'rush-emacs-git)
 (require 'rush-emacs-electric)
+(require 'rush-emacs-grep)
+(require 'rush-emacs-misc)
