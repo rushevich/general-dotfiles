@@ -41,7 +41,7 @@
    `(dired-broken-symlink        ((t (:background ,khaki :foreground ,black :weight bold :slant italic))))
    `(link                        ((t (:foreground ,blue-dodger :underline t))))
    `(mode-line                   ((t (:foreground ,azure-light :background ,blue-dodger
-                                       :box (:line-width 1 :color ,slate-grey :style nil)))))
+						  :box (:line-width 1 :color ,slate-grey :style nil)))))
    `(mode-line-active            ((t (:inherit mode-line))))
    `(mode-line-inactive          ((t (:background ,grey-49 :box (:line-width 1 :color ,grey-49 :style nil)))))
    `(font-lock-keyword-face       ((t (:foreground ,blue-steel))))
@@ -52,7 +52,13 @@
    `(font-lock-warning-face       ((t (:inherit warning))))
    `(font-lock-constant-face      ((t (:foreground ,steel-light))))
    `(font-lock-doc-markup-face    ((t (:foreground ,off-white))))
-   `(font-lock-preprocessor-face  ((t (:foreground ,off-white))))
+   `(font-lock-preprocessor-face  ((t (:foreground ,blue-light))))
    `(font-lock-function-name-face ((t (:foreground ,blue-cadet :weight bold))))
-   `(font-lock-comment-face       ((t (:foreground ,azure-grey :slant italic))))))
+   `(font-lock-comment-face       ((t (:foreground ,azure-grey :slant italic))))
+
+
+   
+   ;; Org mode faces
+   `(org-level-1 ((t (:foreground ,blue-bright :height 200 :weight bold))))
+   `(org-level-2 ((t (:foreground ,blue-cadet :height 170 :wegiht bold))))))
 (provide-theme 'blue-dark)
