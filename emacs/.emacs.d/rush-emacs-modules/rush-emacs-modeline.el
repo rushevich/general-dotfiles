@@ -5,16 +5,22 @@
     '(:eval (propertize (buffer-name) 'face 'bold))
   "Modeline construct to display the buffer name")
 
+;; TODO: copy prot pilcrow sign for org mode. and add mode signs in general 󰛘
 (defvar-local rush-modeline-major-mode
-    '(:eval (capitalize (string-trim-right (symbol-name major-mode) "-mode")))
-  "Modeline construct to display the current major mode")
+    '(:eval (let ((str (capitalize (string-trim-right (symbol-name major-mode) "-mode")))
+		  )
+	      (pcase str
+		("Org" (concat "¶ " str))
+		("Emacs-Lisp" (concat "λ " str))
+		(_ str))))
+    "Modeline construct to display the current major mode")
 
 (defun rush-modeline--dirty ()
   "Internal function that returns two possible indicators depending on whether or not the buffer has been modified since last read"
   (let* ((dirty (buffer-modified-p))
-	 (s (if dirty "dirty" "clean"))
-	 (f (if dirty 'error 'success)))
-    (propertize s 'face f)))
+	 (s (if dirty "[dirty]" "[clean]"))
+	 (f (if dirty 'warning 'success)))
+    (propertize s 'face '(:inherit f :weight normal))))
 
 (defvar-local rush-modeline-dirty
     '(:eval (rush-modeline--dirty))
@@ -24,7 +30,7 @@
     '(:eval (format-time-string "%a %d %b, %H:%M")))
 
 (defun rush-modeline--access ()
-  (propertize (if buffer-read-only "r-" "rw") 'face 'bold))
+  (concat (if buffer-read-only "[ro]" "[rw]") "  "))
 
 (defvar-local rush-modeline-access
     '(:eval (rush-modeline--access)))
@@ -35,7 +41,7 @@
 
 (defun rush-modeline--vc-branch ()
   "Returns the current branch name of the project containing buffer/file"
-  (concat " :: " (propertize (concat " " (car (vc-git-branches))) 'face 'success)))
+  (concat "    " (propertize (concat "[" (car (vc-git-branches)) "]") 'face 'success)))
 
 (defun rush-modeline--vc-tracked ()
   "Returns non-nil if the current file/buffer is tracked"
@@ -66,11 +72,10 @@
 	      '("%e"
 		" "
 		rush-modeline-access
-		" :: "
 		rush-modeline-dirty
-		" :: "
+		"     "
 		rush-modeline-bufname
-		" :: "
+		"    "
 		rush-modeline-major-mode
 		;; here will go git stuff
 		rush-modeline-vc-info
