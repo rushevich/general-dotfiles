@@ -15,6 +15,14 @@
   ;; By default, this will log into the LOGBOOK drawer
   (setq org-log-into-drawer t)
   (setq org-todo-keywords
-	'((sequence "TODO(t)" "WAIT(w!)" "|" "CANCELED(c)" "DONE(d)"))))
-  
+	'((sequence "TODO(t)" "WAIT(w!)" "|" "CANCELED(c)" "DONE(d)")))
+  (add-hook 'org-mode-hook
+	  (lambda ()
+	    (visual-line-mode 1)
+	    (display-line-numbers-mode -1))))
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((C . t)))
+
 (provide 'rush-emacs-org)

@@ -1,3 +1,4 @@
+;; ---------------------------------------------
 ;;; c things
 (with-eval-after-load 'c-ts-mode
   (setq c-ts-mode-indent-offset 4))
@@ -8,9 +9,13 @@
   (setq c-basic-offset 4))
 
 (defun c++-setup ()
-  (c-set-offset 'innamespace[0]))
+  (c-set-offset 'innamespace[0])
+  (keymap-set c++-mode-map "C-<return>" #'c-indent-new-comment-line))
 
-(add-hook 'c++-mode-hook 'c++-setup)
+(with-eval-after-load 'c++-mode
+  (c++-setup))
+;; ---------------------------------------------
+
 
 ;; (with-eval-after-load 'emacs-lisp-mode
 ;;   (flymake-mode -1))

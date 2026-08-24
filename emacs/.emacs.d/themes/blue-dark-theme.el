@@ -26,6 +26,9 @@
   (custom-theme-set-faces
    'blue-dark
    `(default                     ((t (:foreground ,azure-light :background ,black))))
+   `(window-divider              ((t (:foreground ,black))))
+   `(window-divider-first-pixel  ((t (:foreground ,black))))
+   `(window-divider-last-pixel   ((t (:foreground ,black))))
    `(region                      ((t (:foreground ,black :background ,slate-grey))))
    `(cursor                      ((t (:foreground ,azure-light :background ,grey-50))))
    `(show-paren-match            ((t (:background ,blue-deep-sky :box (:line-width 1 :color ,azure-light :style nil)))))

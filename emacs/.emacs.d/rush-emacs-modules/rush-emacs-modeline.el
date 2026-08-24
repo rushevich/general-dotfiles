@@ -1,11 +1,16 @@
 ;; This module was developed using prot's guide "Emacs: write a custom mode line"
 ;; basic modeline idea:
 ;; file modified indication : buffer name : flymake details : vc details : date and time
+(defun rush-modeline--window-active-p ()
+  "returns non-nil if we updating the current window's modeline
+   used mode-line-window-selected-p to figure this out"
+  (let ((window (selected-window)))
+    (eq window (old-selected-window))))
+
 (defvar-local rush-modeline-bufname
     '(:eval (propertize (buffer-name) 'face 'bold))
   "Modeline construct to display the buffer name")
 
-;; TODO: copy prot pilcrow sign for org mode. and add mode signs in general 󰛘
 (defvar-local rush-modeline-major-mode
     '(:eval (let ((str (capitalize (string-trim-right (symbol-name major-mode) "-mode")))
 		  )
@@ -20,7 +25,7 @@
   (let* ((dirty (buffer-modified-p))
 	 (s (if dirty "[dirty]" "[clean]"))
 	 (f (if dirty 'warning 'success)))
-    (propertize s 'face '(:inherit f :weight normal))))
+    (propertize s 'face `(:inherit ,f :weight normal))))
 
 (defvar-local rush-modeline-dirty
     '(:eval (rush-modeline--dirty))
@@ -79,6 +84,8 @@
 		rush-modeline-major-mode
 		;; here will go git stuff
 		rush-modeline-vc-info
+		"   "
+		rush-modeline-active
 		mode-line-format-right-align
 		rush-modeline-datetime))
 (provide 'rush-emacs-modeline)
