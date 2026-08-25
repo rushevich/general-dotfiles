@@ -5,9 +5,12 @@
 	      ("C-c C-a" . eglot-code-actions))
   :hook ((c-mode c++-mode c-ts-mode c++-ts-mode python-mode) . eglot-ensure)
   :config
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
   (setf (alist-get '(c-mode c++-mode c-ts-mode c++-ts-mode)
                  eglot-server-programs nil nil #'equal)
-	'("clangd" "--background-index" "--clang-tidy" "--header-insertion=never")))
+	'("clangd" "--background-index" "--clang-tidy" "--header-insertion=never"))
+  :hook
+  (nix-mode . eglot-ensure))
 
 ;; labels in completions are decorated (for C/C++)
 (setq-default eglot-workspace-configuration
