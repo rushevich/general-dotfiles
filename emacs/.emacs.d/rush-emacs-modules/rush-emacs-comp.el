@@ -27,6 +27,13 @@
   :config
   (setq corfu-popupinfo-delay '(1.25 . 0.5))
   (corfu-popupinfo-mode 1)
+  ;; Enable auto completion, configure delay, trigger and quitting
+  (setq corfu-auto t                 ;; Enable automatic completion
+  corfu-auto-delay 0.2         ;; Delay in seconds before popup appears
+  corfu-auto-prefix 2          ;; Minimum string length required to trigger completion
+  corfu-cycle t           ;; Wrap around when navigating completion candidates
+  corfu-quit-at-boundary t     ;; Quit completion upon encountering a boundary separator
+  corfu-quit-no-match t)      ;; Quit completion when no match is found
   :init (global-corfu-mode))
 
 ;; TODO: install and configure cape
