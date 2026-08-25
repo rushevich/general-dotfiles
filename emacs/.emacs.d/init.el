@@ -52,3 +52,4 @@
 (require 'rush-emacs-electric)
 (require 'rush-emacs-grep)
 (require 'rush-emacs-misc)
+(require 'rush-emacs-ediff)
