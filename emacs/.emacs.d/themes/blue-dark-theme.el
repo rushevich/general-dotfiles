@@ -33,7 +33,7 @@
    `(window-divider-last-pixel   ((t (:foreground ,ink))))
    `(region                      ((t (:background ,sel :extend t))))
    `(cursor                      ((t (:background ,caret :foreground ,ink))))
-   `(show-paren-match            ((t (:background ,deepsky :box (:line-width 1 :color ,fg :style nil)))))
+   `(show-paren-match            ((t (:background ,deepsky))))
    `(minibuffer-prompt           ((t (:foreground ,sky))))
    `(highlight                   ((t (:inherit default :background ,deepsky))))
    `(success                     ((t (:foreground ,fg :weight bold))))
@@ -42,7 +42,7 @@
    `(fringe                      ((t (:background ,ink :foreground ,mute-hi))))
    `(line-number                 ((t (:foreground ,steel-hi))))
    `(line-number-current-line    ((t (:foreground ,cadet :weight bold))))
-   `(isearch                     ((t (:foreground ,fg :background ,vivid :box (:line-width 1 :color ,fg :style nil)))))
+   `(isearch                     ((t (:foreground ,fg :background ,vivid))))
    `(dired-broken-symlink        ((t (:background ,sand :foreground ,ink :weight bold :slant italic))))
    `(link                        ((t (:foreground ,dodger :underline t))))
    `(mode-line                   ((t (:foreground ,fg :background ,dodger
