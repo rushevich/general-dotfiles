@@ -22,7 +22,8 @@
   (setq read-process-output-max (* 4 1024 1024))
   (setq eglot-events-buffer-config '(:size 0))
   (setq eglot-autoshutdown t)
-  (setq eglot-extend-to-xref t))
+  (setq eglot-extend-to-xref t)
+  (add-hook 'before-save-hook 'eglot-format-buffer))
 
 (setq-default eglot-workspace-configuration
               '(:clangd (:completion (:detailedLabel t))))
