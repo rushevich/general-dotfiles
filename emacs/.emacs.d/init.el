@@ -28,6 +28,7 @@
 (global-display-line-numbers-mode 1)
 (setq next-screen-context-lines 6)
 (setq-default indent-tabs-mode nil)
+(setq-default cursor-type 'bar)
 
 (let ((dir (locate-user-emacs-file "var/")))
   (make-directory (expand-file-name "backup" dir) t)
@@ -62,7 +63,6 @@
 (require 'rush-emacs-bolt)
 (require 'rush-emacs-window)
 (require 'rush-emacs-comp)
-(require 'rush-emacs-compile)
 (require 'rush-emacs-git)
 (require 'rush-emacs-electric)
 (require 'rush-emacs-grep)

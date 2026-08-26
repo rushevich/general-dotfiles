@@ -1,35 +1,28 @@
-;; This module was developed using prot's guide "Emacs: write a custom mode line"
-;; basic modeline idea:
-;; file modified indication : buffer name : flymake details : vc details : date and time
-(defun rush-modeline--window-active-p ()
-  "returns non-nil if we updating the current window's modeline
-   used mode-line-window-selected-p to figure this out"
-  (let ((window (selected-window)))
-    (eq window (old-selected-window))))
+;;; rush-emacs-modeline.el --- custom mode line -*- lexical-binding: t; -*-
+;; Developed using prot's guide "Emacs: write a custom mode line".
+;; layout: access : dirty : buffer name : major mode : vc : flymake ... datetime
 
 (defvar-local rush-modeline-bufname
     '(:eval (propertize (buffer-name) 'face 'bold))
   "Modeline construct to display the buffer name")
 
 (defvar-local rush-modeline-major-mode
-    '(:eval (let ((str (capitalize (string-trim-right (symbol-name major-mode) "-mode")))
-		  )
-	      (pcase str
-		("Org" (concat "¶ " str))
-		("Emacs-Lisp" (concat "λ " str))
-		(_ str))))
-    "Modeline construct to display the current major mode")
+    '(:eval (let ((str (capitalize (string-trim-right (symbol-name major-mode) "-mode"))))
+              (pcase str
+                ("Org" (concat "¶ " str))
+                ("Emacs-Lisp" (concat "λ " str))
+                (_ (string-replace "-Ts" "" str)))))
+  "Modeline construct to display the current major mode")
 
 (defun rush-modeline--dirty ()
-  "Internal function that returns two possible indicators depending on whether or not the buffer has been modified since last read"
   (let* ((dirty (buffer-modified-p))
-	 (s (if dirty "[dirty]" "[clean]"))
-	 (f (if dirty 'warning 'success)))
+         (s (if dirty "[dirty]" "[clean]"))
+         (f (if dirty 'warning 'success)))
     (propertize s 'face `(:inherit ,f :weight normal))))
 
 (defvar-local rush-modeline-dirty
     '(:eval (rush-modeline--dirty))
-  "Modeline construct that displays whether or not the current buffer is dirty (modified)")
+  "Modeline construct that displays whether the buffer is modified")
 
 (defvar-local rush-modeline-datetime
     '(:eval (format-time-string "%a %d %b, %H:%M")))
@@ -40,52 +33,53 @@
 (defvar-local rush-modeline-access
     '(:eval (rush-modeline--access)))
 
-(defun rush-modeline--vc-managed ()
-  "Returns non-nil if the current file/buffer is under vc"
-  (locate-dominating-file (file-truename (or buffer-file-name default-directory)) ".git"))
-
-(defun rush-modeline--vc-branch ()
-  "Returns the current branch name of the project containing buffer/file"
-  (concat "    " (propertize (concat "[" (car (vc-git-branches)) "]") 'face 'success)))
-
-(defun rush-modeline--vc-tracked ()
-  "Returns non-nil if the current file/buffer is tracked"
-  (vc-state buffer-file-name))
-
 (defun rush-modeline--vc-info ()
-  (cond
-   ((not (rush-modeline--vc-managed)) "")
-   ((not (rush-modeline--vc-tracked)) (concat (rush-modeline--vc-branch) (propertize " UT" 'face 'warning)))
-   (t (rush-modeline--vc-branch))))
+  "Branch name for the current buffer, or an empty string."
+  (if (and vc-mode buffer-file-name)
+      (let* ((backend (vc-backend buffer-file-name))
+             (branch (string-trim
+                      (substring (substring-no-properties vc-mode)
+                                 (+ 2 (length (symbol-name backend))))))
+             (edited (memq (vc-state buffer-file-name backend)
+                           '(edited added removed conflict))))
+        (concat "    "
+                (propertize (concat "[" branch "]")
+                            'face (if edited 'warning 'success))))
+    ""))
 
 (defvar-local rush-modeline-vc-info
     '(:eval (rush-modeline--vc-info))
   "Modeline construct to display relevant VC info")
 
+(defvar-local rush-modeline-flymake
+    '(:eval (when (bound-and-true-p flymake-mode)
+              (list "   " flymake-mode-line-counters)))
+  "Modeline construct showing flymake's error/warning/note counts.")
+
 (dolist (locals '(rush-modeline-bufname
-		  rush-modeline-major-mode
-		  rush-modeline-dirty
-		  rush-modeline-datetime
-		  rush-modeline-access
-		  rush-modeline-vc-info))
+                  rush-modeline-major-mode
+                  rush-modeline-dirty
+                  rush-modeline-datetime
+                  rush-modeline-access
+                  rush-modeline-vc-info
+                  rush-modeline-flymake))
   (put locals 'risky-local-variable t))
 
-;; TODO: get flymake diagnostics in modeline
 (setq-default mode-line-right-align-edge 'right-fringe)
 
+;; TODO: add window-selected stuff
 (setq-default mode-line-format
-	      '("%e"
-		" "
-		rush-modeline-access
-		rush-modeline-dirty
-		"     "
-		rush-modeline-bufname
-		"    "
-		rush-modeline-major-mode
-		;; here will go git stuff
-		rush-modeline-vc-info
-		"   "
-		rush-modeline-active
-		mode-line-format-right-align
-		rush-modeline-datetime))
+              '("%e"
+                " "
+                rush-modeline-access
+                rush-modeline-dirty
+                "     "
+                rush-modeline-bufname
+                "    "
+                rush-modeline-major-mode
+                rush-modeline-vc-info
+                rush-modeline-flymake
+                mode-line-format-right-align
+                rush-modeline-datetime))
+
 (provide 'rush-emacs-modeline)

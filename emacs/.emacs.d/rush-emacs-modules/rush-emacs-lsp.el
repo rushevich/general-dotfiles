@@ -33,4 +33,9 @@
   :config
   (setq eldoc-box-clear-with-C-g t))
 
+(use-package yasnippet
+  :config
+  (setq yas-snippet-dirs '("~/.config/emacs/snippets"))
+  (yas-global-mode 1))
+
 (provide 'rush-emacs-lsp)
