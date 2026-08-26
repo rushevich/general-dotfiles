@@ -1,26 +1,36 @@
-;;; eglot installation and config (eglot is emacs' built-in LSP backend)
-;; TODO: add configuration for other LSPs
+;;; rush-emacs-lsp.el --- eglot configuration -*- lexical-binding: t; -*-
+
 (use-package eglot
+  :ensure nil
   :bind (:map eglot-mode-map
-	      ("C-c C-a" . eglot-code-actions))
-  :hook ((c-mode c++-mode c-ts-mode c++-ts-mode python-mode) . eglot-ensure)
+              ("C-c C-a" . eglot-code-actions)
+              ("C-c C-r" . eglot-rename)
+              ("C-c C-f" . eglot-format-buffer))
+  :hook ((c-ts-mode c++-ts-mode python-mode nix-mode) . eglot-ensure)
   :config
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-  (setf (alist-get '(c-mode c++-mode c-ts-mode c++-ts-mode)
-                 eglot-server-programs nil nil #'equal)
-	'("clangd" "--background-index" "--clang-tidy" "--header-insertion=never"))
-  :hook
-  (nix-mode . eglot-ensure))
+  (add-to-list 'eglot-server-programs
+               '((c-ts-mode c++-ts-mode)
+                 . ("clangd"
+                    "--background-index"
+                    "--clang-tidy"
+                    "--header-insertion=never"
+                    "--completion-style=detailed"
+                    "--header-insertion-decorators=0"
+                    "--pch-storage=memory")))
 
-;; labels in completions are decorated (for C/C++)
+  (setq read-process-output-max (* 4 1024 1024))
+  (setq eglot-events-buffer-config '(:size 0))
+  (setq eglot-autoshutdown t)
+  (setq eglot-extend-to-xref t))
+
 (setq-default eglot-workspace-configuration
-	      '(:clangd (:completion (:detailedLabel t))))
-
+              '(:clangd (:completion (:detailedLabel t))))
 
 ;;; eldoc-box: displays eldoc information in a pretty, pop-up box
-(use-package eldoc-box)
-
-
-;;; keybinds
+(use-package eldoc-box
+  :hook (eglot-managed-mode . eldoc-box-hover-at-point-mode)
+  :config
+  (setq eldoc-box-clear-with-C-g t))
 
 (provide 'rush-emacs-lsp)

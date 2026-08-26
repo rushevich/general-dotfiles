@@ -58,9 +58,23 @@
    `(font-lock-preprocessor-face  ((t (:foreground ,blue-light))))
    `(font-lock-function-name-face ((t (:foreground ,blue-cadet :weight bold))))
    `(font-lock-comment-face       ((t (:foreground ,azure-grey :slant italic))))
+   `(font-lock-doc-face           ((t (:inherit font-lock-comment-face))))
 
+   ;; Faces used at treesit-font-lock-level 4. Without these, c++-ts-mode
+   ;; renders function calls, variable uses, operators and numbers in
+   ;; `default' and the buffer looks flatter than it did under cc-mode.
+   `(font-lock-function-call-face    ((t (:foreground ,blue-sky))))
+   `(font-lock-variable-use-face     ((t (:foreground ,slate-blue))))
+   `(font-lock-property-name-face    ((t (:foreground ,blue-deep-sky))))
+   `(font-lock-property-use-face     ((t (:foreground ,slate-blue))))
+   `(font-lock-bracket-face          ((t (:foreground ,grey-50))))
+   `(font-lock-delimiter-face        ((t (:foreground ,grey-50))))
+   `(font-lock-misc-punctuation-face ((t (:foreground ,grey-50))))
+   `(font-lock-operator-face         ((t (:foreground ,steel-light))))
+   `(font-lock-number-face           ((t (:foreground ,khaki))))
+   `(font-lock-escape-face           ((t (:foreground ,khaki :weight bold))))
+   `(font-lock-negation-char-face    ((t (:foreground ,red))))
 
-   
    ;; Org mode faces
    `(org-level-1 ((t (:foreground ,blue-bright :height 200 :weight bold))))
    `(org-level-2 ((t (:foreground ,blue-cadet :height 170 :wegiht bold))))))
