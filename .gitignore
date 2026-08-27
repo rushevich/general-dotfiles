@@ -1,4 +1,12 @@
-emacs/.emacs.d/*
-!emacs/.emacs.d/init.el
-!emacs/.emacs.d/rush-emacs-modules/
-!emacs/.emacs.d/themes/
+/emacs/.emacs.d/auto-save-list/
+/emacs/.emacs.d/eln-cache/
+/emacs/.emacs.d/elpa/
+/emacs/.emacs.d/eshell/
+/emacs/.emacs.d/history
+/emacs/.emacs.d/places
+/emacs/.emacs.d/projects
+/emacs/.emacs.d/recentf
+/emacs/.emacs.d/tramp
+/emacs/.emacs.d/transient/
+/emacs/.emacs.d/tree-sitter/
+/emacs/.emacs.d/var/

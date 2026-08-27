@@ -1,5 +1,3 @@
-(add-to-list 'exec-path "/opt/homebrew/opt/llvm/bin" nil nil)
-
 (use-package dape
   :preface
   ;; By default dape shares the same keybinding prefix as `gud'
