@@ -119,7 +119,7 @@
    ;; ---------------------------------------------------------------
    ;; eglot
    ;; ---------------------------------------------------------------
-   `(eglot-highlight-symbol-face          ((t (:background ,deepsky :weight bold))))
+   `(eglot-highlight-symbol-face          ((t (:underline (:style line :color ,cadet)))))
    `(eglot-mode-line                      ((t (:foreground ,cadet :weight bold))))
    `(eglot-inlay-hint-face                ((t (:inherit shadow :height 0.8))))
    `(eglot-type-hint-face                 ((t (:inherit eglot-inlay-hint-face))))
