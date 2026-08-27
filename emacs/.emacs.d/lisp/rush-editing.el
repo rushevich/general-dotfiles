@@ -1,3 +1,5 @@
+;;; rush-editing.el --- -*- lexical binding: t; -*-
+
 (defun select-line ()
   "Selects the current line and moves the cursor to the end of the line"
   (interactive)
@@ -30,6 +32,7 @@
 ;; My preferred look for dired
 (add-hook 'dired-mode-hook
 	  (lambda ()
-	    (dired-hide-details-mode 1)))
+	    (dired-hide-details-mode 1)
+            (display-line-numbers-mode -1)))
 
 (provide 'rush-editing)

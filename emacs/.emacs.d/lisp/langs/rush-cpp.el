@@ -6,6 +6,8 @@
                (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))))
   (add-to-list 'treesit-language-source-alist src))
 
+(rush-treesit-ensure 'c 'cpp)
+
 ;;; mode association
 (when (treesit-ready-p 'cpp t)
   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))

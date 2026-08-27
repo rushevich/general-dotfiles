@@ -1,4 +1,6 @@
-i(setq inhibit-startup-screen t)
+;;; rush-defaults.el --- -*- lexical-binding: t; -*-
+
+(setq inhibit-startup-screen t)
 (setq ring-bell-function #'ignore)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode 1)

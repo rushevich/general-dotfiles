@@ -1,2 +1,0 @@
-
-(provide 'rush-emacs-bolt)

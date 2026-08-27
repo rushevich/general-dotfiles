@@ -1,3 +1,5 @@
+;;; rush-completion.el --- -*- lexical-binding: t; -*-
+
 (use-package vertico
   :init (vertico-mode))
 

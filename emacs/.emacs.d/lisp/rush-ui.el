@@ -1,6 +1,4 @@
-;; Stops emacs from querying the user as a safety convention whenever loading a theme
-(setq custom-safe-themes t)
-
+;;; rush-ui.el --- -*- lexical-binding: t; -*-
 ;; Sets the default font for any frame
 ;; Frames will also start maximized
 (add-to-list 'default-frame-alist `(font . "Iosevka Nerd Font Mono-14"))
@@ -9,7 +7,6 @@
 ;; This is a custom-theme. It is located in themes
 (load-theme 'blue-dark t)
 
-(add-hook 'emacs-lisp-mode-hook (lambda () (flymake-mode -1)))
 (add-hook 'Info-mode-hook (lambda () (display-line-numbers-mode -1)))
 
 ;; Developed using prot's guide "Emacs: write a custom mode line".

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Lexical Binding 
+# key: <lb
+# --
+
+;;; ${1:file name} --- -*- lexical binding: t; -*-
+$0

@@ -6,6 +6,8 @@
                (yaml  . ("https://github.com/ikatyang/tree-sitter-yaml"))))
   (add-to-list 'treesit-language-source-alist src))
 
+(rush-treesit-ensure 'cmake 'yaml)
+
 (when (treesit-ready-p 'cmake t)
   (add-to-list 'auto-mode-alist
                '("\\(?:CMakeLists\\.txt\\|\\.cmake\\)\\'" . cmake-ts-mode)))
