@@ -83,10 +83,11 @@
    ;; ---------------------------------------------------------------
    ;; mode line
    ;; ---------------------------------------------------------------
-   `(mode-line                   ((t (:foreground ,fg :background ,dodger
-                                                  :box (:line-width 1 :color ,slate :style nil)))))
+   `(mode-line          ((t (:foreground ,fg :background ,ink
+                                         :box (:line-width 4 :color ,ink) :overline ,slate))))
    `(mode-line-active            ((t (:inherit mode-line))))
-   `(mode-line-inactive          ((t (:background ,mute :box (:line-width 1 :color ,mute :style nil)))))
+   `(mode-line-inactive ((t (:foreground ,fg-dim :background ,ink-soft
+                                         :box nil :overline ,ink-soft))))   
 
    ;; ---------------------------------------------------------------
    ;; font lock

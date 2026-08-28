@@ -11,6 +11,7 @@
   (setq eglot-events-buffer-config '(:size 0))
   (setq eglot-autoshutdown t)
   (setq eglot-extend-to-xref t))
+(add-hook 'before-save-hook #'eglot-format-buffer)
 
 (use-package eldoc-box
   :hook (eglot-managed-mode . eldoc-box-hover-at-point-mode)

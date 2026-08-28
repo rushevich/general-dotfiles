@@ -11,9 +11,13 @@
 
 ;; Developed using prot's guide "Emacs: write a custom mode line".
 ;; layout: access : dirty : buffer name : major mode : vc : flymake ... datetime
+(defun rush-modeline--bufname-face ()
+  (if (and (buffer-file-name) (buffer-modified-p))
+      '(bold italic)
+    'bold))
 
 (defvar-local rush-modeline-bufname
-    '(:eval (propertize (buffer-name) 'face 'bold))
+    '(:eval (propertize (buffer-name) 'face (rush-modeline--bufname-face)))
   "Modeline construct to display the buffer name")
 
 (defvar-local rush-modeline-major-mode
@@ -38,7 +42,7 @@
     '(:eval (format-time-string "%a %d %b, %H:%M")))
 
 (defun rush-modeline--access ()
-  (concat (if buffer-read-only "[ro]" "[rw]") "  "))
+  (concat (if buffer-read-only "󰌾" "") "  "))
 
 (defvar-local rush-modeline-access
     '(:eval (rush-modeline--access)))
@@ -68,7 +72,6 @@
 
 (dolist (locals '(rush-modeline-bufname
                   rush-modeline-major-mode
-                  rush-modeline-dirty
                   rush-modeline-datetime
                   rush-modeline-access
                   rush-modeline-vc-info

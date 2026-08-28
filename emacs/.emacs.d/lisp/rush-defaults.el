@@ -6,7 +6,7 @@
 (global-display-line-numbers-mode 1)
 (setq next-screen-context-lines 6)
 (setq-default indent-tabs-mode nil)
-(setq-default cursor-type 'bar)
+(setq-default cursor-type 'box)
 
 (let ((dir (locate-user-emacs-file "var/")))
   (make-directory (expand-file-name "backup" dir) t)
@@ -23,5 +23,6 @@
 
 (save-place-mode 1)
 (recentf-mode 1)
+(which-key-mode 1)
 
 (provide 'rush-defaults)
