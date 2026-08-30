@@ -4,5 +4,6 @@
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 ;; Emacs 31 feature
-(setq user-lisp-directory "~/.config/emacs/lisp/")
+;; see update of aug 30 in `init.el'
+;; (setq user-lisp-directory "~/.config/emacs/lisp/")
 (setq package-enable-at-startup nil)

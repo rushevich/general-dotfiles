@@ -75,8 +75,10 @@
 ;; Emacs 31 automatically adds files from the user-lisp-directory to the load-path
 ;; files are even recursively considered, so this is much nicer now
 ;; check early-init.el, since this process is done before the init.el is loaded and after early-init.el
-;; (dolist (dir '("lisp" "lisp/langs"))
-;;   (add-to-list 'load-path (locate-user-emacs-file dir)))
+
+;; update 30 aug: had to disable this due to bugs with the use-package form and elpaca
+(dolist (dir '("lisp" "lisp/langs"))
+  (add-to-list 'load-path (locate-user-emacs-file dir)))
 (add-to-list 'custom-theme-load-path (locate-user-emacs-file "themes"))
 
 (setq custom-file (make-temp-file "emacs-custom-"))

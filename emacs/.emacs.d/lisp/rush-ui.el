@@ -33,15 +33,15 @@
                 (_ (string-replace "-Ts" "" str)))))
   "Modeline construct to display the current major mode")
 
-(defun rush-modeline--dirty ()
-  (let* ((dirty (buffer-modified-p))
-         (s (if dirty "[dirty]" "[clean]"))
-         (f (if dirty 'warning 'success)))
-    (propertize s 'face `(:inherit ,f :weight normal))))
+;; (defun rush-modeline--dirty ()
+;;   (let* ((dirty (buffer-modified-p))
+;;          (s (if dirty "[dirty]" "[clean]"))
+;;          (f (if dirty 'warning 'success)))
+;;     (propertize s 'face `(:inherit ,f :weight normal))))
 
-(defvar-local rush-modeline-dirty
-    '(:eval (rush-modeline--dirty))
-  "Modeline construct that displays whether the buffer is modified")
+;; (defvar-local rush-modeline-dirty
+;;     '(:eval (rush-modeline--dirty))
+;;   "Modeline construct that displays whether the buffer is modified")
 
 (defvar-local rush-modeline-datetime
     '(:eval (format-time-string "%a %d %b, %H:%M")))
@@ -90,7 +90,6 @@
               '("%e"
                 " "
                 rush-modeline-access
-                rush-modeline-dirty
                 "     "
                 rush-modeline-bufname
                 "    "
