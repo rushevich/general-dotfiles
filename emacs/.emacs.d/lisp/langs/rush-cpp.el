@@ -6,14 +6,14 @@
                (cpp . ("https://github.com/tree-sitter/tree-sitter-cpp"))))
   (add-to-list 'treesit-language-source-alist src))
 
-(rush-treesit-ensure 'c 'cpp)
+;; (rush-treesit-ensure 'c 'cpp)
 
 ;;; mode association
-(when (treesit-ready-p 'cpp t)
-  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
-(when (treesit-ready-p 'c t)
-  (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
-  (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode)))
+;; (when (treesit-ready-p 'cpp t)
+;;   (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode)))
+;; (when (treesit-ready-p 'c t)
+;;   (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+;;   (add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode)))
 
 (add-to-list 'auto-mode-alist
              '("\\.\\(?:tpp\\|ipp\\|txx\\|inl\\)\\'" . c++-mode))
@@ -38,10 +38,16 @@
 
 ;;; buffer setup
 (defun rush-c-ts-common-setup ()
+  "Basic personal setup for c-ts modes."
   (setq-local indent-tabs-mode nil)
-  (setq-local comment-style 'extra-line)
-  (flymake-mode 1))
+  (setq-local comment-style 'extra-line))
 
+;;; flymake setup
+(use-package flymake
+  :ensure nil
+  :config
+  (setq flymake-show-diagnostics-at-end-of-line 'fancy) ;; nice indicators using unicode graphics
+  (flymake-mode t))
 (add-hook 'c-ts-base-mode-hook #'rush-c-ts-common-setup)
 
 (with-eval-after-load 'c-ts-mode
@@ -66,7 +72,7 @@
 (add-hook 'c++-ts-mode-hook #'eglot-ensure)
 
 ;;; debugger
-(setq gdb-many-windows t
+(setq gdb-many-windows nil
       gdb-show-main t
       gdb-restore-window-configuration-after-quit t
       gdb-non-stop-setting nil
@@ -75,3 +81,4 @@
       gud-highlight-current-line t)
 
 (provide 'rush-cpp)
+;;; rush-cpp.el ends here

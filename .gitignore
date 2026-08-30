@@ -10,3 +10,6 @@
 /emacs/.emacs.d/transient/
 /emacs/.emacs.d/tree-sitter/
 /emacs/.emacs.d/var/
+*.elc
+/emacs/.emacs.d/url/
+/emacs/.emacs.d/lisp/.user-lisp-autoloads.el

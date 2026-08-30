@@ -4,10 +4,15 @@
 (add-to-list 'default-frame-alist `(font . "Iosevka Nerd Font Mono-14"))
 (add-to-list 'default-frame-alist `(fullscreen . maximized))
 
+;; display-buffer-alist configuration
+(add-to-list 'display-buffer-alist '("^\\*Async Shell Command\\*$" display-buffer-in-side-window))
+
 ;; This is a custom-theme. It is located in themes
 (load-theme 'blue-dark t)
 
-(add-hook 'Info-mode-hook (lambda () (display-line-numbers-mode -1)))
+(dolist (mode-hook '(Info-mode-hook gud-mode-hook help-mode-hook eshell-mode-hook Man-mode-hook))
+        (add-hook mode-hook
+                  (lambda () (display-line-numbers-mode -1))))
 
 ;; Developed using prot's guide "Emacs: write a custom mode line".
 ;; layout: access : dirty : buffer name : major mode : vc : flymake ... datetime

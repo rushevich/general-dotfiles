@@ -1,12 +1,11 @@
-;;; rush-misc-langs.el --- languages without enough config for their own file
-;;; -*- lexical-binding: t; -*-
+;; -*- lexical-binding: t; -*-
 (require 'treesit)
 
 (dolist (src '((cmake . ("https://github.com/uyha/tree-sitter-cmake"))
                (yaml  . ("https://github.com/ikatyang/tree-sitter-yaml"))))
   (add-to-list 'treesit-language-source-alist src))
 
-(rush-treesit-ensure 'cmake 'yaml)
+;; (rush-treesit-ensure 'cmake 'yaml)
 
 (when (treesit-ready-p 'cmake t)
   (add-to-list 'auto-mode-alist

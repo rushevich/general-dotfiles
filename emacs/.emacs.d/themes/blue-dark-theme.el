@@ -4,6 +4,7 @@
 (let ((ink        "#111111")   ; background
       (ink-soft   "#171717")
       (wash       "#1b1b1b")   ; subtle raised background
+      (mute-low   "#4f4f4f")
       (mute       "#7d7d7d")
       (mute-hi    "#7f7f7f")
       (fg         "#e0eeee")   ; default foreground
@@ -57,7 +58,7 @@
    `(warning                     ((t (:foreground ,sand :weight bold))))
    `(error                       ((t (:foreground ,alert :weight bold))))
    `(fringe                      ((t (:background ,ink :foreground ,mute-hi))))
-   `(line-number                 ((t (:foreground ,steel-hi))))
+   `(line-number                 ((t (:foreground ,mute-low))))
    `(line-number-current-line    ((t (:foreground ,cadet :weight bold))))
    `(header-line                 ((t (:background ,ink-soft :foreground ,fg-dim))))
    `(tooltip                     ((t (:background ,ink-soft :foreground ,fg))))

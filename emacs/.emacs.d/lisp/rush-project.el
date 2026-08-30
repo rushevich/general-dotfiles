@@ -1,4 +1,4 @@
-;;; rush-project.el --- -*- lexical binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Install magit
 ;; TODO: make magit open in a maximized window and mess with the window rules in general

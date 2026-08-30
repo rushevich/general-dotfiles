@@ -1,4 +1,4 @@
-;;; rush-editing.el --- -*- lexical binding: t; -*-
+;; -*- lexical-binding: t; -*-
 
 (defun select-line ()
   "Selects the current line and moves the cursor to the end of the line"
@@ -34,5 +34,9 @@
 	  (lambda ()
 	    (dired-hide-details-mode 1)
             (display-line-numbers-mode -1)))
+
+(delete-selection-mode 1)
+(setq elisp-fontify-semantically t)
+
 
 (provide 'rush-editing)
