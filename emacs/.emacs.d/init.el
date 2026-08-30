@@ -1,12 +1,25 @@
 ;;; init.el --- -*- lexical-binding: t; -*-
 
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(package-initialize)
+(setq package-archives
+      '(("gnu-elpa" . "https://elpa.gnu.org/packages/")
+        ("gnu-elpa-devel" . "https://elpa.gnu.org/devel/")
+        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+        ("melpa" . "https://melpa.org/packages/")))
 
-(unless package-archive-contents
-  (package-refresh-contents))
+;; priority goes from highest to lowest number. unmentioned archives are set to 0 priority
+(setq package-archive-priorities
+      '(("gnu-elpa" . 3)
+        ("melpa" . 2)
+        ("nongnu" . 1)))
+
+(defun rush/packages-ensure-refreshed ()
+  "Ensures that packages are refreshed at most once after initializing the emacs daemon"
+  (unless (bound-and-true-p rush/packages-refreshed)
+    (package-refresh-contents)
+    (setq rush/packages-refreshed t)))
+
+(rush/packages-ensure-refreshed)
 
 ;; use-package is in emacs since version 29
 (require 'use-package) 

@@ -5,3 +5,4 @@
 (scroll-bar-mode 0)
 ;; Emacs 31 feature
 (setq user-lisp-directory "~/.config/emacs/lisp/")
+(setq package-enable-at-startup t)

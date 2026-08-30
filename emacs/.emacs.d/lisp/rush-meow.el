@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 ;; rush-meow.el --- configuration for the `meow' emacs modal editing package
+
+(use-package meow
+  :ensure t)
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-define-key
@@ -82,12 +85,8 @@
    '("z" . meow-pop-selection)
    '("'" . repeat)
    '("<escape>" . ignore)))
-
-(use-package meow
-  :ensure t
-  :config
-  (meow-setup)
-  (meow-global-mode t))
+(meow-setup)
+(meow-global-mode 1)
 
 (provide 'rush-meow)
 ;;; rush-meow.el ends here
