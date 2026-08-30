@@ -1,6 +1,7 @@
 ;;; rush-completion.el --- -*- lexical-binding: t; -*-
 
 (use-package vertico
+  :ensure t
   :init (vertico-mode))
 
 (use-package savehist
@@ -8,6 +9,7 @@
   :init (savehist-mode))
 
 (use-package orderless
+  :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles partial-completion))))
@@ -15,10 +17,12 @@
   (completion-pcm-leading-wildcard t))
 
 (use-package marginalia
+  :ensure t
   :bind (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init (marginalia-mode))
 
 (use-package corfu
+  :ensure t
   :custom
   (corfu-cycle t)
   (corfu-preview-current nil)
@@ -38,9 +42,11 @@
   ;; corfu-quit-no-match t)      ;; Quit completion when no match is found
   :init (global-corfu-mode))
 
-(use-package consult-eglot)
+(use-package consult-eglot
+  :ensure t)
 
 (use-package consult
+  :ensure t
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
          ("C-c h" . consult-history)
@@ -139,6 +145,7 @@
 )
 
 (use-package emacs
+  :ensure nil
   :custom
   ;; enable indentation-completion with TAB (as opposed to explicitly M-tab)
   (tab-always-indent 'complete)

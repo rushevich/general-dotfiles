@@ -11,7 +11,8 @@
 
 ;; Activates electric-pair minor-mode.
 ;; TODO: needs more specific configuration
-(electric-pair-mode)
+(electric-pair-mode 1)
+(electric-quote-mode 1)
 
 ;; Loads the ediff package and sets up sane defaults
 ;; Configuration provided courtesy of protesilaos' basic video on ediff

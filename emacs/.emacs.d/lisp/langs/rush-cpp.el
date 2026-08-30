@@ -44,7 +44,7 @@
 
 ;;; flymake setup
 (use-package flymake
-  :ensure nil
+  :ensure nil ;; flymake is bundled with emacs
   :config
   (setq flymake-show-diagnostics-at-end-of-line 'fancy) ;; nice indicators using unicode graphics
   (flymake-mode t))

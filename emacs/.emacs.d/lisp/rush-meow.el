@@ -2,7 +2,8 @@
 ;; rush-meow.el --- configuration for the `meow' emacs modal editing package
 
 (use-package meow
-  :ensure t)
+  :ensure (:host github :repo "meow-edit/meow.git"))
+
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-define-key

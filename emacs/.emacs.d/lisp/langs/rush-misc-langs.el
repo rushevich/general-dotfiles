@@ -15,9 +15,11 @@
   (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode)))
 
 (use-package markdown-mode
+  :ensure t
   :mode "\\.md\\'")
 
 (use-package nix-mode
+  :ensure t
   :mode "\\.nix\\'"
   :hook (nix-mode . eglot-ensure)
   :init

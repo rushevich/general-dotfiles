@@ -3,6 +3,7 @@
 ;; (use-package rmsbolt :ensure t)
 ;; (setq rmsbolt-command "g++ -O0")
 
-(use-package rainbow-mode)
+(use-package rainbow-mode
+  :ensure t)
 
 (provide 'rush-tools)

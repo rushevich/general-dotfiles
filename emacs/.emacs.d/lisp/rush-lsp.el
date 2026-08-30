@@ -1,7 +1,7 @@
 ;;; rush-lsp.el --- eglot, language-agnostic -*- lexical-binding: t; -*-
 
 (use-package eglot
-  :ensure nil
+  :ensure nil ;; bundled with emacs
   :bind (:map eglot-mode-map
               ("C-c C-a" . eglot-code-actions)
               ("C-c C-r" . eglot-rename)
@@ -14,6 +14,7 @@
 (add-hook 'before-save-hook #'eglot-format-buffer)
 
 (use-package eldoc-box
+  :ensure t
   :hook (eglot-managed-mode . eldoc-box-hover-at-point-mode)
   :config
   (setq eldoc-box-clear-with-C-g t))
@@ -21,6 +22,7 @@
 ;; eglot only advertises snippet support if yas-minor-mode is live in the
 ;; buffer at connection time. Nothing here needs snippet files.
 (use-package yasnippet
+  :ensure t
   :config
   (setq yas-snippet-dirs (list (locate-user-emacs-file "snippets")))
   (yas-global-mode 1))

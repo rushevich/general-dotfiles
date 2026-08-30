@@ -13,3 +13,5 @@
 *.elc
 /emacs/.emacs.d/url/
 /emacs/.emacs.d/lisp/.user-lisp-autoloads.el
+elpaca
+projects.eld

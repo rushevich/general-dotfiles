@@ -2,10 +2,12 @@
 
 ;; Install magit
 ;; TODO: make magit open in a maximized window and mess with the window rules in general
-(use-package magit)
+(use-package magit
+  :ensure t)
 
 ;; Maybe it is better to use wgrep but we can play with both
-(use-package deadgrep)
+(use-package deadgrep
+  :ensure t)
 
 (require 'project)
 
