@@ -80,5 +80,11 @@
       gdb-max-source-line-length 500
       gud-highlight-current-line t)
 
+;; hide-show
+(add-hook 'c-ts-base-mode-hook #'hs-minor-mode)
+(setq hs-show-indicators t
+      hs-indicator-type 'fringe
+      hs-display-lines-hidden t)
+
 (provide 'rush-cpp)
 ;;; rush-cpp.el ends here

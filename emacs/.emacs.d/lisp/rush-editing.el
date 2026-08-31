@@ -39,5 +39,14 @@
 (delete-selection-mode 1)
 (setq elisp-fontify-semantically t)
 
+(use-package flash
+  :ensure t
+  :commands (flash-jump flash-jump-continue flash-action flash-action-undo flash-treesitter)
+  :config
+  (require 'flash-isearch)
+  (flash-isearch-mode 1))
+
+(use-package vundo
+  :ensure t)
 
 (provide 'rush-editing)

@@ -19,8 +19,44 @@
    '("8" . meow-digit-argument)
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
-   '("/" . meow-keypad-describe-key)
-   '("?" . meow-cheatsheet))
+   '("?" . meow-keypad-describe-key)
+
+   ;; files and buffers
+   '("f" . find-file)
+   '("r" . consult-recent-file)
+   '("b" . consult-buffer)
+   '("s" . save-buffer)
+   '("k" . kill-current-buffer)
+   '("d" . dired-jump)
+
+   ;; search and navigation
+   '("l" . consult-line)
+   '("i" . consult-imenu)
+   '("I" . consult-imenu-multi)
+   '("j" . consult-eglot-symbols)
+   '("e" . consult-flymake)
+
+   ;; windows
+   '("w o" . other-window)
+   '("w w" . delete-other-windows)
+   '("w d" . delete-window)
+   '("w s" . split-window-below)
+   '("w v" . split-window-right)
+
+   ;; version control
+   '("_" . (lambda () (interactive) (require 'magit) (magit-status)))
+
+   ;; prefix maps
+   '("p" . "C-x p") ;; maps to project commands
+
+  ;; primitive maps
+   '(";" . "M-x")
+   '(":" . "M-X")
+   '("u" . vundo)
+   
+   ;; bookmarks
+   '("RET" . consult-bookmark)
+   '("B" . bookmark-set))
   (meow-normal-define-key
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
@@ -39,7 +75,7 @@
    '("[" . meow-beginning-of-thing)
    '("]" . meow-end-of-thing)
    '("a" . meow-append)
-   '("A" . meow-open-below)
+   '("A" . (lambda () (interactive) (end-of-line) (meow-append)))
    '("b" . meow-back-word)
    '("B" . meow-back-symbol)
    '("c" . meow-change)
@@ -47,13 +83,14 @@
    '("D" . meow-backward-delete)
    '("e" . meow-next-word)
    '("E" . meow-next-symbol)
-   '("f" . meow-find)
+   '("f" . flash-jump)
+   '("/" . consult-line)
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
    '("h" . meow-left)
    '("H" . meow-left-expand)
    '("i" . meow-insert)
-   '("I" . meow-open-above)
+   '("I" . (lambda () (interactive) (meow-back-to-indentation) (meow-insert)))
    '("j" . meow-next)
    '("J" . meow-next-expand)
    '("k" . meow-prev)
@@ -80,15 +117,56 @@
    '("X" . meow-goto-line)
    '("y" . meow-save)
    '("Y" . meow-sync-grab)
-   '("z" . meow-pop-selection)
+   '("S" . meow-pop-selection)
    '("'" . repeat)
-   '("<escape>" . ignore)))
+   '("<escape>" . ignore)
+   
+   ;; folding
+   '("z z" . hs-cycle)
+   '("z a" . hs-toggle-hiding)
+   '("z c" . hs-hide-block)
+   '("z o" . hs-show-block)
+   '("z m" . hs-hide-all)
+   '("z r" . hs-show-all)))
+
+   ;; macros (will uncomment when i start using)
+   ;; '("Q" . kmacro-start-macro-or-insert-counter)
+   ;; '("@" . kmacro-end-or-call-macro)))
 
 (use-package meow
   :ensure (:host github :repo "meow-edit/meow")
-  :config 
+  :config
   (meow-setup)
-  (meow-global-mode 1))
+  (meow-global-mode 1)
+  (setq meow-use-clipboard t)
+  (dolist (rule '((eshell-mode . insert)))
+    (add-to-list 'meow-mode-state-list rule))
+  (meow-thing-register 'angle
+                       '(regexp "<" ">")
+                       '(regexp "<" ">"))
+  (meow-thing-register 'double-quote
+                       '(regexp "\"" "\"")
+                       '(regexp "\"" "\""))
+  (meow-thing-register 'single-quote
+                       '(regexp "'" "'")
+                       '(regexp "'" "'"))
+  (meow-thing-register 'backtick
+                       '(regexp "`" "`")
+                       '(regexp "`" "`"))
+  (setq meow-char-thing-table
+        '((?\( . round)
+          (?\[ . square)
+          (?\{ . curly)
+          (?\< . angle)
+          (?\" . double-quote)
+          (?\' . single-quote)
+          (?\` . backtick)
+          (?e . symbol)
+          (?w . window)
+          (?b . buffer)
+          (?p . paragraph)
+          (?l . line)
+          (?d . defun))))
 
 (provide 'rush-meow)
 ;;; rush-meow.el ends here

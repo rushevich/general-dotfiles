@@ -21,6 +21,8 @@
       kept-old-versions 2
       version-control t)
 
+(setq bookmark-save-flag 1)
+
 (save-place-mode 1)
 (recentf-mode 1)
 (which-key-mode 1)
