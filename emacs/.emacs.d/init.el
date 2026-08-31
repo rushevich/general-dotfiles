@@ -98,3 +98,4 @@
 (require 'rush-cpp)
 (require 'rush-misc-langs)
 (require 'rush-meow)
+(require 'rush-hdl)
