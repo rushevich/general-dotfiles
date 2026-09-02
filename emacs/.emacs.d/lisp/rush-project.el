@@ -12,7 +12,8 @@
 (require 'project)
 
 ;; This line ensures that C++ projects via CMake can be detected by project.el
-(add-to-list 'project-vc-extra-root-markers "CMakeLists.txt")
+(setq project-vc-extra-root-markers
+      '("CMakeLists.txt" "compile_commands.json" ".slang" "slang.f"))
 
 ;; TODO: follow DRY principle
 (defun rush/cmake-configure-project ()

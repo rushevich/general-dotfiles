@@ -46,7 +46,7 @@
 (use-package flymake
   :ensure nil ;; flymake is bundled with emacs
   :config
-  (setq flymake-show-diagnostics-at-end-of-line 'fancy) ;; nice indicators using unicode graphics
+  ;; (setq flymake-show-diagnostics-at-end-of-line 'fancy) disabled because screws with formatting
   (flymake-mode t))
 (add-hook 'c-ts-base-mode-hook #'rush-c-ts-common-setup)
 
