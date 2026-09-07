@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Application
+# key: APP
+# --
+** APPLIED ${1:Company Name} :: ${2:Position}
+   :PROPERTIES:
+   :LINK: [[${3:Link}]]
+   :APPLIED: `(format-time-string "[%Y-%m-%d]")`
+   :RESUME: V${4:Version Number}
+   :LOCATION: ${5:City}, ${6:State}
+   :END:

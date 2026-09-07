@@ -34,7 +34,7 @@
    '("i" . consult-imenu)
    '("I" . consult-imenu-multi)
    '("j" . consult-eglot-symbols)
-   '("e" . consult-flymake)
+   '("e" . consult-flycheck)
 
    ;; windows
    '("w o" . other-window)

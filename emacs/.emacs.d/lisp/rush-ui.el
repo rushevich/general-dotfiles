@@ -73,14 +73,34 @@
 (defvar-local rush-modeline-flymake
     '(:eval (when (bound-and-true-p flymake-mode)
               (list "   " flymake-mode-line-counters)))
-  "Modeline construct showing flymake's error/warning/note counts.")
+    "Modeline construct showing flymake's error/warning/note counts.")
+
+(defun rush-modeline--flycheck ()
+  (when (bound-and-true-p flycheck-mode)
+    (pcase flycheck-last-status-change
+      ((or 'not-checked 'no-checker) "")
+      ('running     (propertize "   ⟳" 'face 'compilation-mode-line-run))
+      ('errored     (propertize "   !" 'face 'compilation-error))
+      ('interrupted (propertize "   -" 'face 'shadow))
+      ('suspicious  (propertize "   ?" 'face 'compilation-warning))
+      ('finished
+       (let-alist (flycheck-count-errors flycheck-current-errors)
+         (concat "   "
+                 (propertize (format "%d" (or .error 0))   'face 'compilation-error)
+                 "/"
+                 (propertize (format "%d" (or .warning 0)) 'face 'compilation-warning)
+                 "/"
+                 (propertize (format "%d" (or .info 0))    'face 'compilation-info)))))))
+
+(defvar-local rush-modeline-flycheck
+    '(:eval (rush-modeline--flycheck)))
 
 (dolist (locals '(rush-modeline-bufname
                   rush-modeline-major-mode
                   rush-modeline-datetime
                   rush-modeline-access
                   rush-modeline-vc-info
-                  rush-modeline-flymake))
+                  rush-modeline-flycheck))
   (put locals 'risky-local-variable t))
 
 (setq-default mode-line-right-align-edge 'right-fringe)
@@ -95,7 +115,7 @@
                 "    "
                 rush-modeline-major-mode
                 rush-modeline-vc-info
-                rush-modeline-flymake
+                rush-modeline-flycheck
                 mode-line-format-right-align
                 rush-modeline-datetime))
 

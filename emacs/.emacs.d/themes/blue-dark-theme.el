@@ -141,6 +141,17 @@
    `(flymake-end-of-line-diagnostics-face ((t (:foreground ,fg-dim :height 0.9 :slant italic))))
 
    ;; ---------------------------------------------------------------
+   ;; flycheck
+   ;; ---------------------------------------------------------------
+   `(flycheck-error          ((t (:underline (:style wave :color ,alert)))))
+   `(flycheck-warning        ((t (:underline (:style wave :color ,sand)))))
+   `(flycheck-info           ((t (:underline (:style wave :color ,sea)))))
+   `(flycheck-fringe-error   ((t (:foreground ,alert :weight bold))))
+   `(flycheck-fringe-warning ((t (:foreground ,sand :weight bold))))
+   `(flycheck-fringe-info    ((t (:foreground ,sea :weight bold))))
+   `(flycheck-error-list-highlight ((t (:background ,sel :extend t))))
+
+   ;; ---------------------------------------------------------------
    ;; compilation -- also drives flymake's mode line counters
    ;; ---------------------------------------------------------------
    `(compilation-error           ((t (:foreground ,alert :weight bold))))

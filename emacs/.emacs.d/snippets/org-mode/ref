@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: TODO-Ref
+# key: REF
+# --
+*** TODO Discover and reach out to reference
+SCHEDULED: $0

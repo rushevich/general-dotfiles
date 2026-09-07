@@ -103,6 +103,9 @@
 (use-package consult-eglot
   :ensure t)
 
+(use-package consult-flycheck
+  :ensure t)
+
 (use-package embark
   :ensure t
   :config

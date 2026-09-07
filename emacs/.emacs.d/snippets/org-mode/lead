@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Lead
+# key: LEAD
+# --
+** TODO ${1:Company Name} :: ${2:Position}
+   SCHEDULED: <add this manually>
+   :PROPERTIES:
+   :LINK: [[${3:Link}]]
+   :LOCATION: ${4:City}, ${5:State}
+   :END:
+   
