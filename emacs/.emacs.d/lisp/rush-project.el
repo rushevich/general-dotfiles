@@ -54,4 +54,8 @@ If a CMakeLists.txt is not found within the root directory, or if there is no pr
           (async-shell-command "cmake -B build && cmake --build build")
         (error (format "Unable to find CMakeLists.txt in project root: %s" root-dir))))))
 
+(use-package envrc
+  :ensure t
+  :hook (elpaca-after-init . envrc-global-mode))
+
 (provide 'rush-project)
