@@ -23,6 +23,14 @@
 
 (setq bookmark-save-flag 1)
 
+;; (keymap-set global-map "S-<up>" #'windmove-up)
+;; (keymap-set global-map "S-<down>" #'windmove-down)
+;; (keymap-set global-map "S-<left>" #'windmove-left)
+;; (keymap-set global-map "S-<right>" #'windmove-right)
+(require 'windmove)
+(windmove-default-keybindings 'shift)
+(windmove-swap-states-default-keybindings '(shift control))
+
 (save-place-mode 1)
 (recentf-mode 1)
 (which-key-mode 1)
