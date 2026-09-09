@@ -19,6 +19,12 @@
 
 ;; Developed using prot's guide "Emacs: write a custom mode line".
 ;; layout: access : dirty : buffer name : major mode : vc : flymake ... datetime
+(defun rush-modeline--tint (string face)
+  "Applies ‘face’ to ‘string’ when the mode-line refers to the currently selected window"
+  (if (mode-line-window-selected-p)
+      (propertize string 'face face)
+    string))
+
 (defun rush-modeline--bufname-face ()
   (if (and (buffer-file-name) (buffer-modified-p))
       '(bold italic)
@@ -85,11 +91,11 @@
       ('finished
        (let-alist (flycheck-count-errors flycheck-current-errors)
          (concat "   "
-                 (propertize (format "%d" (or .error 0))   'face 'compilation-error)
+                 (rush-modeline--tint (format "%d" (or .error 0))    'compilation-error)
                  "/"
-                 (propertize (format "%d" (or .warning 0)) 'face 'compilation-warning)
+                 (rush-modeline--tint (format "%d" (or .warning 0))  'compilation-warning)
                  "/"
-                 (propertize (format "%d" (or .info 0))    'face 'compilation-info)))))))
+                 (rush-modeline--tint (format "%d" (or .info 0))     'compilation-info)))))))
 
 (defvar-local rush-modeline-flycheck
   '(:eval (rush-modeline--flycheck)))
