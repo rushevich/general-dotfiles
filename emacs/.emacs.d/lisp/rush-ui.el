@@ -1,12 +1,15 @@
 ;;; rush-ui.el --- -*- lexical-binding: t; -*-
 ;; Sets the default font for any frame
 ;; Frames will also start maximized
-(add-to-list 'default-frame-alist `(font . "Iosevka Nerd Font Mono-14"))
+(add-to-list 'default-frame-alist `(font . "Iosevka Nerd Font-14"))
 (add-to-list 'default-frame-alist `(fullscreen . maximized))
 
 ;; display-buffer-alist configuration
 (add-to-list 'display-buffer-alist '("^\\*Async Shell Command\\*$" display-buffer-in-side-window))
-
+(setq window-divider-default-right-width 10
+      window-divider-default-bottom-width 0
+      window-divider-default-places t)
+(window-divider-mode 1)
 ;; This is a custom-theme. It is located in themes
 (load-theme 'blue-dark t)
 
@@ -58,12 +61,8 @@
       (let* ((backend (vc-backend buffer-file-name))
              (branch (string-trim
                       (substring (substring-no-properties vc-mode)
-                                 (+ 2 (length (symbol-name backend))))))
-             (edited (memq (vc-state buffer-file-name backend)
-                           '(edited added removed conflict))))
-        (concat "    "
-                (propertize (concat "[" branch "]")
-                            'face (if edited 'warning 'success))))
+                                 (+ 2 (length (symbol-name backend)))))))
+        (concat "     " branch " "))
     ""))
 
 (defvar-local rush-modeline-vc-info
@@ -93,13 +92,23 @@
                  (propertize (format "%d" (or .info 0))    'face 'compilation-info)))))))
 
 (defvar-local rush-modeline-flycheck
-    '(:eval (rush-modeline--flycheck)))
+  '(:eval (rush-modeline--flycheck)))
+
+(defun rush-modeline--bar ()
+  (propertize " ▌" 'face
+              `(:foreground ,(face-attribute
+                              (if (mode-line-window-selected-p)
+                                  'mode-line 'mode-line-inactive)
+                              :overline nil t))))
+(defvar-local rush-modeline-bar
+  '(:eval (rush-modeline--bar)))
 
 (dolist (locals '(rush-modeline-bufname
                   rush-modeline-major-mode
                   rush-modeline-datetime
                   rush-modeline-access
                   rush-modeline-vc-info
+                  rush-modeline-bar
                   rush-modeline-flycheck))
   (put locals 'risky-local-variable t))
 
@@ -108,15 +117,15 @@
 ;; TODO: add window-selected stuff
 (setq-default mode-line-format
               '("%e"
-                " "
+                rush-modeline-bar
                 rush-modeline-access
-                "     "
                 rush-modeline-bufname
                 "    "
                 rush-modeline-major-mode
-                rush-modeline-vc-info
                 rush-modeline-flycheck
                 mode-line-format-right-align
+                rush-modeline-vc-info
+                "   "
                 rush-modeline-datetime))
 
 (provide 'rush-ui)

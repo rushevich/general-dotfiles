@@ -4,6 +4,7 @@
 (let ((ink        "#111111")   ; background
       (ink-soft   "#171717")
       (wash       "#1b1b1b")   ; subtle raised background
+      (wash-dim   "#3f3f3f")   ; subtle raised background
       (mute-low   "#4f4f4f")
       (mute       "#7d7d7d")
       (mute-hi    "#7f7f7f")
@@ -84,11 +85,14 @@
    ;; ---------------------------------------------------------------
    ;; mode line
    ;; ---------------------------------------------------------------
+   `(rush-mode-line-overline ((t ())))
    `(mode-line          ((t (:foreground ,fg :background ,ink
-                                         :box (:line-width 4 :color ,ink) :overline ,slate))))
+                                         :box (:line-width 4 :color ,ink) :overline ,bright))))
    `(mode-line-active            ((t (:inherit mode-line))))
-   `(mode-line-inactive ((t (:foreground ,fg-dim :background ,ink-soft
-                                         :box nil :overline ,ink-soft))))   
+   `(mode-line-inactive ((t (:foreground ,wash-dim :background ,ink
+                                         :box (:line-width 4 :color ,ink) :overline ,wash-dim))))
+   `(rush-modeline-bar-active   ((t (:foreground ,bright))))
+   `(rush-modeline-bar-inactive ((t (:foreground ,ink-soft))))
 
    ;; ---------------------------------------------------------------
    ;; font lock
