@@ -2,6 +2,7 @@
 (deftheme blue-dark "dark theme by george")
 
 (let ((ink        "#111111")   ; background
+      (night      "#060708")
       (ink-soft   "#171717")
       (wash       "#1b1b1b")   ; subtle raised background
       (wash-dim   "#3f3f3f")   ; subtle raised background
@@ -42,15 +43,15 @@
    ;; ---------------------------------------------------------------
    ;; core
    ;; ---------------------------------------------------------------
-   `(default                     ((t (:foreground ,fg :background ,ink))))
+   `(default                     ((t (:foreground ,fg :background ,night))))
    `(shadow                      ((t (:foreground ,fg-dim))))
-   `(window-divider              ((t (:foreground ,ink))))
-   `(window-divider-first-pixel  ((t (:foreground ,ink))))
-   `(window-divider-last-pixel   ((t (:foreground ,ink))))
+   `(window-divider              ((t (:foreground ,night))))
+   `(window-divider-first-pixel  ((t (:foreground ,night))))
+   `(window-divider-last-pixel   ((t (:foreground ,night))))
    `(vertical-border             ((t (:foreground ,ink-soft))))
    `(region                      ((t (:background ,sel :extend t))))
    `(secondary-selection         ((t (:background ,warn-bg :extend t))))
-   `(cursor                      ((t (:background ,caret :foreground ,ink))))
+   `(cursor                      ((t (:background ,caret :foreground ,night))))
    `(show-paren-match            ((t (:background ,deepsky))))
    `(show-paren-mismatch         ((t (:background ,alert :foreground ,fg-hi))))
    `(minibuffer-prompt           ((t (:foreground ,sky))))
@@ -58,7 +59,7 @@
    `(success                     ((t (:foreground ,fg :weight bold))))
    `(warning                     ((t (:foreground ,sand :weight bold))))
    `(error                       ((t (:foreground ,alert :weight bold))))
-   `(fringe                      ((t (:background ,ink :foreground ,mute-hi))))
+   `(fringe                      ((t (:background ,night :foreground ,mute-hi))))
    `(line-number                 ((t (:foreground ,mute-low))))
    `(line-number-current-line    ((t (:foreground ,cadet :weight bold))))
    `(header-line                 ((t (:background ,ink-soft :foreground ,fg-dim))))
@@ -68,7 +69,7 @@
    `(link                        ((t (:foreground ,dodger :underline t))))
    `(link-visited                ((t (:foreground ,slate :underline t))))
    `(help-key-binding            ((t (:foreground ,cadet :background ,ink-soft))))
-   `(dired-broken-symlink        ((t (:background ,sand :foreground ,ink :weight bold :slant italic))))
+   `(dired-broken-symlink        ((t (:background ,sand :foreground ,night :weight bold :slant italic))))
    `(dired-directory             ((t (:foreground ,steel :weight bold))))
    `(dired-symlink               ((t (:foreground ,pale-deep :slant italic))))
 
@@ -77,8 +78,8 @@
    ;; ---------------------------------------------------------------
    `(isearch                     ((t (:foreground ,fg :background ,vivid))))
    `(isearch-fail                ((t (:foreground ,fg-hi :background ,minus))))
-   `(isearch-group-1             ((t (:foreground ,ink :background ,cadet))))
-   `(isearch-group-2             ((t (:foreground ,ink :background ,sand))))
+   `(isearch-group-1             ((t (:foreground ,night :background ,cadet))))
+   `(isearch-group-2             ((t (:foreground ,night :background ,sand))))
    `(lazy-highlight              ((t (:foreground ,fg-hi :background ,dodger))))
    `(match                       ((t (:inherit lazy-highlight))))
 
@@ -86,11 +87,11 @@
    ;; mode line
    ;; ---------------------------------------------------------------
    `(rush-mode-line-overline ((t ())))
-   `(mode-line          ((t (:foreground ,fg :background ,ink
-                                         :box (:line-width 4 :color ,ink) :overline ,bright))))
+   `(mode-line          ((t (:foreground ,fg :background ,night
+                                         :box (:line-width 4 :color ,night) :overline ,bright))))
    `(mode-line-active            ((t (:inherit mode-line))))
-   `(mode-line-inactive ((t (:foreground ,wash-dim :background ,ink
-                                         :box (:line-width 4 :color ,ink) :overline ,wash-dim))))
+   `(mode-line-inactive ((t (:foreground ,wash-dim :background ,night
+                                         :box (:line-width 4 :color ,night) :overline ,wash-dim))))
    `(rush-modeline-bar-active   ((t (:foreground ,bright))))
    `(rush-modeline-bar-inactive ((t (:foreground ,ink-soft))))
 

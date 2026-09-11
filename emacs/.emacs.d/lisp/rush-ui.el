@@ -1,7 +1,7 @@
 ;;; rush-ui.el --- -*- lexical-binding: t; -*-
 ;; Sets the default font for any frame
 ;; Frames will also start maximized
-(add-to-list 'default-frame-alist `(font . "Iosevka Nerd Font-14"))
+(add-to-list 'default-frame-alist `(font . "Iosevka Nerd Font-12"))
 (add-to-list 'default-frame-alist `(fullscreen . maximized))
 
 ;; display-buffer-alist configuration
