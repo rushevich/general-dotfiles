@@ -1,2 +1,10 @@
 #+TITLE: Emacs Config Stuff Todo list
 
+* Todo List for Emacs Configuration [0/5]
+** TODO Setup email
+** TODO Fix eldoc bullshitting around
+** TODO Emacs devdocs
+** TODO Emacs package for richer help ~*Help*~ buffer documentation
+** TODO Custom clangd functions for switching between header and implementation files
+** TODO Icons everywhere
+** TODO Consider vertico posframe
