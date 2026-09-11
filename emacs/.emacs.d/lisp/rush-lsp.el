@@ -30,13 +30,10 @@
 (use-package flycheck
   :ensure t
   :hook ((after-init . global-flycheck-mode)
-         ;; Show diagnostics inline, next to the code (Error Lens style)
-         (after-init . global-flycheck-annotate-mode))
+         (after-init . global-flycheck-eglot-mode))
+
   :config
   ;; Report Eglot's LSP diagnostics through Flycheck
-  (global-flycheck-eglot-mode 1)
-  (global-flycheck-annotate-mode 1)
-  (setq flycheck-annotate-current-line-style 'sideline
-        flycheck-annotate-other-lines-style 'sideline))
+  (global-flycheck-eglot-mode 1))       
 
 (provide 'rush-lsp)
