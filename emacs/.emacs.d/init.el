@@ -91,6 +91,7 @@
 (require 'rush-completion)
 (require 'rush-project)
 (require 'rush-org)
+(require 'rush-mail)
 (require 'rush-ui)
 (require 'rush-editing)
 (require 'rush-treesit)

@@ -4,8 +4,6 @@
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
   (meow-motion-define-key
-   '("j" . meow-next)
-   '("k" . meow-prev)
    '("<escape>" . ignore))
   (meow-leader-define-key
    ;; Use SPC (0-9) for digit arguments.
@@ -56,7 +54,11 @@
    
    ;; bookmarks
    '("RET" . consult-bookmark)
-   '("B" . bookmark-set))
+   '("B" . bookmark-set)
+
+   ;; mail
+   '("m" . notmuch)
+   '("M" . notmuch-jump-search))
   (meow-normal-define-key
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
@@ -139,7 +141,11 @@
   (meow-setup)
   (meow-global-mode 1)
   (setq meow-use-clipboard t)
-  (dolist (rule '((eshell-mode . insert)))
+  (dolist (rule '((eshell-mode . insert)
+                  (notmuch-hello-mode . motion)
+                  (notmuch-search-mode . motion)
+                  (notmuch-tree-mode . motion)
+                  (notmuch-show-mode . motion)))
     (add-to-list 'meow-mode-state-list rule))
   (meow-thing-register 'angle
                        '(regexp "<" ">")

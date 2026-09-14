@@ -1,9 +1,10 @@
 #+TITLE: Emacs Config Stuff Todo list
 
-* Todo List for Emacs Configuration [0/5]
+* Todo List for Emacs Configuration [1/7]
 ** TODO Setup email
 ** TODO Fix eldoc bullshitting around
-** TODO Emacs devdocs
+** DONE Emacs devdocs
+CLOSED: [2026-09-11 Fri 23:22]
 ** TODO Emacs package for richer help ~*Help*~ buffer documentation
 ** TODO Custom clangd functions for switching between header and implementation files
 ** TODO Icons everywhere

@@ -13,11 +13,19 @@
   (setq eglot-extend-to-xref t))
 (add-hook 'before-save-hook #'eglot-format-buffer)
 
+
+
 (use-package eldoc-box
   :ensure t
   :hook (eglot-managed-mode . eldoc-box-hover-at-point-mode)
   :config
   (setq eldoc-box-clear-with-C-g t))
+
+(use-package eldoc
+  :ensure nil
+  :config
+  (setq eldoc-display-functions '(eldoc-display-in-echo-area)))
+
 
 ;; eglot only advertises snippet support if yas-minor-mode is live in the
 ;; buffer at connection time. Nothing here needs snippet files.
