@@ -58,4 +58,11 @@ If a CMakeLists.txt is not found within the root directory, or if there is no pr
   :ensure t
   :hook (elpaca-after-init . envrc-global-mode))
 
+(use-package inheritenv
+  :ensure t
+  :after envrc
+  :config
+  (inheritenv-add-advice 'gdb)
+  (inheritenv-add-advice 'compile))
+
 (provide 'rush-project)

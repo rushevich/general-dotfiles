@@ -30,6 +30,7 @@
 (require 'windmove)
 (windmove-default-keybindings 'shift)
 (windmove-swap-states-default-keybindings '(shift control))
+(windmove-delete-default-keybindings)
 
 (save-place-mode 1)
 (recentf-mode 1)

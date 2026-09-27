@@ -78,7 +78,16 @@
       gdb-non-stop-setting nil
       gdb-delete-out-of-scope nil
       gdb-max-source-line-length 500
+      gdb-stack-buffer-addresses t
+      gdb-stack-buffer-locations t
+      gdb-thread-buffer-addresses t
       gud-highlight-current-line t)
+
+(add-hook 'gdb-frames-mode-hook #'hl-line-mode)
+(add-hook 'gdb-threads-mode-hook #'hl-line-mode)
+(add-hook 'gdb-breakpoints-mode-hook #'hl-line-mode)
+
+(gud-tooltip-mode 1)
 
 ;; hide-show
 (add-hook 'c-ts-base-mode-hook #'hs-minor-mode)
