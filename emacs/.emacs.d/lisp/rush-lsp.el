@@ -11,9 +11,14 @@
   (setq eglot-events-buffer-config '(:size 0))
   (setq eglot-autoshutdown t)
   (setq eglot-extend-to-xref t))
-(add-hook 'before-save-hook #'eglot-format-buffer)
 
+(defun rush/eglot-format-on-save ()
+  "Format with the LSP server on save, but only in served buffers."
+  (if (bound-and-true-p eglot--managed-mode)
+      (add-hook 'before-save-hook #'eglot-format-buffer -10 t)
+    (remove-hook 'before-save-hook #'eglot-format-buffer t)))
 
+(add-hook 'eglot-managed-mode-hook #'rush/eglot-format-on-save)
 
 (use-package eldoc-box
   :ensure t

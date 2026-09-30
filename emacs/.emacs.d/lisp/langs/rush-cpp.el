@@ -42,13 +42,7 @@
   (setq-local indent-tabs-mode nil)
   (setq-local comment-style 'extra-line))
 
-;; ;;; flymake setup
-;; (use-package flymake
-;;   :ensure nil ;; flymake is bundled with emacs
-;;   :config
-;;   ;; (setq flymake-show-diagnostics-at-end-of-line 'fancy) disabled because screws with formatting
-;;   (flymake-mode t))
-;; (add-hook 'c-ts-base-mode-hook #'rush-c-ts-common-setup)
+(add-hook 'c-ts-base-mode-hook #'rush-c-ts-common-setup)
 
 (with-eval-after-load 'c-ts-mode
   (keymap-set c-ts-base-mode-map "C-<return>" #'default-indent-new-line)

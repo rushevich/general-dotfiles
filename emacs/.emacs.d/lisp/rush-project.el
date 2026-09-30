@@ -15,44 +15,42 @@
 (setq project-vc-extra-root-markers
       '("CMakeLists.txt" "compile_commands.json" ".slang" "slang.f"))
 
-;; TODO: follow DRY principle
-(defun rush/cmake-configure-project ()
-  "Configures the cmake project using the current project (as in project.el) root as the root directory
-If a CMakeLists.txt is not found within the root directory, or if there is no project, this function produces an error message."
-  (interactive)
-  (if (eq (project-current) nil) ;; then
-      (error "Current file does not refer to any project" )
-    (let*
-        ((root-dir (project-root (project-current)))
-         (default-directory root-dir))
-      (if (file-exists-p "CMakeLists.txt")
-          (async-shell-command "cmake -B build")
-        (error (format "Unable to find CMakeLists.txt in project root: %s" root-dir))))))
+(require 'ansi-color)
+(setq compilation-scroll-output 'first-error
+      compilation-ask-about-save nil
+      compilation-max-output-line-length nil)
+(add-hook 'compilation-filter-hook #'ansi-color-compilation-filter)
 
-(defun rush/cmake-build-project ()
-  "Builds the cmake project using the current project root as the root directory.
-If a CMakeLists.txt is not found within the root directory, or if there is no project, this function produces an error message."
-  (interactive)
-  (if (eq (project-current) nil) ;; then
-      (error "Current file does not refer to any project" )
-    (let*
-        ((root-dir (project-root (project-current)))
-         (default-directory root-dir))
-      (if (file-exists-p "CMakeLists.txt")
-          (async-shell-command "cmake --build build")
-        (error (format "Unable to find CMakeLists.txt in project root: %s" root-dir))))))
+(defun rush/cmake--run (command)
+  "Run COMMAND in the current project root via `compile'."
+  (let* ((project (or (project-current)
+                      (user-error "Current file does not belong to a project")))
+         (default-directory (project-root project)))
+    (unless (file-exists-p "CMakeLists.txt")
+      (user-error "No CMakeLists.txt in project root: %s" default-directory))
+    (compile command)))
 
-(defun rush/cmake-build-and-configure-project ()
-  "Configures then builds the CMake project "
+(defun rush/cmake-configure ()
+  "Configure the project's build directory."
   (interactive)
-    (if (eq (project-current) nil) ;; then
-      (error "Current file does not refer to any project" )
-    (let*
-        ((root-dir (project-root (project-current)))
-         (default-directory root-dir))
-      (if (file-exists-p "CMakeLists.txt")
-          (async-shell-command "cmake -B build && cmake --build build")
-        (error (format "Unable to find CMakeLists.txt in project root: %s" root-dir))))))
+  (rush/cmake--run
+   "cmake -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"))
+
+(defun rush/cmake-build ()
+  "Build the project."
+  (interactive)
+  (rush/cmake--run "cmake --build build"))
+
+(defun rush/cmake-configure-and-build ()
+  "Configure then build."
+  (interactive)
+  (rush/cmake--run
+   "cmake -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON && cmake --build build"))
+
+(defun rush/cmake-test ()
+  "Run ctest in the build directory."
+  (interactive)
+  (rush/cmake--run "ctest --test-dir build --output-on-failure"))
 
 (use-package envrc
   :ensure t
