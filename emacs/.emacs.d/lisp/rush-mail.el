@@ -112,5 +112,27 @@
   :ensure t
   :after notmuch)
 
+(use-package org-msg
+  :ensure t
+  :config
+  (setq mail-user-agent 'notmuch-user-agent
+        org-msg-options "html-postamble:nil toc:nil author:nil email:nil num:nil \\n:t"
+        org-msg-default-alternatives '((new . (text html))
+                                       (reply-to-html . (text html))
+                                       (reply-to-text . (text)))
+        org-msg-convert-citation t
+        org-msg-signature "
+#+begin_export html
+<div style=\"font-family: Arial, sans-serif; font-size: 14px; color: #444;\">
+  <b style=\"color: #222;\">George Rushevich</b><br>
+  President, C++ Club at UF<br>
+  B.S. Computer Engineering, University of Florida, Dec 2026<br>
+  <span style=\"font-family: monospace;\">203-722-6600</span> |
+  <a href=\"https://linkedin.com/in/rushevich-g\" style=\"font-family: monospace;\">linkedin.com/in/rushevich-g</a>
+</div>
+#+end_export
+")
+  (org-msg-mode))
+
 (provide 'rush-mail)
 ;;; rush-mail.el ends here
