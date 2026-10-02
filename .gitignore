@@ -15,3 +15,5 @@
 /emacs/.emacs.d/lisp/.user-lisp-autoloads.el
 elpaca
 projects.eld
+/emacs/.emacs.d/devdocs/
+/emacs/.emacs.d/org-clock-save.el

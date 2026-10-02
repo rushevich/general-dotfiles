@@ -100,3 +100,4 @@
 (require 'rush-misc-langs)
 (require 'rush-meow)
 (require 'rush-hdl)
+(require 'rush-leetcode)
