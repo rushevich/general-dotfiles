@@ -263,7 +263,100 @@
    ;; ---------------------------------------------------------------
    ;; org
    ;; ---------------------------------------------------------------
-   `(org-level-1 ((t (:foreground ,bright :height 200 :weight bold))))
-   `(org-level-2 ((t (:foreground ,cadet :height 170 :weight bold))))))
+   `(org-document-title          ((t (:foreground ,fg-hi :height 220 :weight bold))))
+   `(org-document-info           ((t (:foreground ,fg-dim))))
+   `(org-document-info-keyword   ((t (:foreground ,mute))))
+   `(org-level-1                 ((t (:foreground ,bright :height 200 :weight bold))))
+   `(org-level-2                 ((t (:foreground ,cadet :height 170 :weight bold))))
+   `(org-level-3                 ((t (:foreground ,sky :weight bold))))
+   `(org-level-4                 ((t (:foreground ,steel-hi :weight bold))))
+   `(org-level-5                 ((t (:foreground ,slate-hi))))
+   `(org-level-6                 ((t (:foreground ,pale-deep))))
+   `(org-level-7                 ((t (:foreground ,steel))))
+   `(org-level-8                 ((t (:foreground ,fg-dim))))
+   `(org-hide                    ((t (:foreground ,night))))
+   `(org-ellipsis                ((t (:foreground ,mute-hi))))
+
+   ;; keywords, tags, priorities
+   `(org-todo                    ((t (:foreground ,sand :weight bold))))
+   `(org-done                    ((t (:foreground ,mute :weight bold))))
+   `(org-headline-done           ((t (:foreground ,fg-dim))))
+   `(org-priority                ((t (:foreground ,caret :weight bold))))
+   `(org-tag                     ((t (:foreground ,slate :slant italic))))
+   `(org-checkbox                ((t (:foreground ,cadet :weight bold))))
+   `(org-checkbox-statistics-todo ((t (:foreground ,sand :weight bold))))
+   `(org-checkbox-statistics-done ((t (:foreground ,mute :weight bold))))
+
+   ;; metadata
+   `(org-meta-line               ((t (:foreground ,mute-hi))))
+   `(org-special-keyword         ((t (:foreground ,mute-hi))))
+   `(org-drawer                  ((t (:foreground ,mute-low))))
+   `(org-property-value          ((t (:foreground ,fg-dim))))
+   `(org-date                    ((t (:foreground ,slate-hi))))
+   `(org-sexp-date               ((t (:foreground ,slate-hi))))
+   `(org-target                  ((t (:foreground ,sky :underline t))))
+   `(org-link                    ((t (:inherit link))))
+   `(org-footnote                ((t (:foreground ,sky :underline t))))
+   `(org-warning                 ((t (:inherit warning))))
+
+   ;; inline markup and blocks
+   `(org-code                    ((t (:foreground ,sand))))
+   `(org-verbatim                ((t (:foreground ,pale))))
+   `(org-block                   ((t (:background ,ink-soft :extend t))))
+   `(org-block-begin-line        ((t (:foreground ,mute :background ,ink-soft :extend t))))
+   `(org-block-end-line          ((t (:inherit org-block-begin-line))))
+   `(org-quote                   ((t (:foreground ,slate-hi :slant italic))))
+   `(org-verse                   ((t (:foreground ,slate-hi :slant italic))))
+   `(org-latex-and-related       ((t (:foreground ,sea))))
+
+   ;; tables
+   `(org-table                   ((t (:foreground ,steel-hi))))
+   `(org-table-header            ((t (:foreground ,cadet :background ,wash :weight bold))))
+   `(org-formula                 ((t (:foreground ,sand))))
+
+   ;; clocking
+   `(org-clock-overlay           ((t (:background ,sel))))
+   `(org-mode-line-clock         ((t (:foreground ,sky))))
+   `(org-mode-line-clock-overrun ((t (:foreground ,alert :weight bold))))
+
+   ;; agenda
+   `(org-agenda-structure        ((t (:foreground ,steel :weight bold))))
+   `(org-agenda-date             ((t (:foreground ,sky))))
+   `(org-agenda-date-today       ((t (:foreground ,bright :weight bold))))
+   `(org-agenda-date-weekend     ((t (:foreground ,slate))))
+   `(org-agenda-done             ((t (:foreground ,fg-dim))))
+   `(org-agenda-dimmed-todo-face ((t (:foreground ,mute))))
+   `(org-agenda-clocking         ((t (:background ,sel :extend t))))
+   `(org-agenda-current-time     ((t (:foreground ,caret))))
+   `(org-time-grid               ((t (:foreground ,mute-low))))
+   `(org-scheduled               ((t (:foreground ,fg))))
+   `(org-scheduled-today         ((t (:foreground ,cadet))))
+   `(org-scheduled-previously    ((t (:foreground ,sand))))
+   `(org-upcoming-deadline       ((t (:foreground ,sand))))
+   `(org-imminent-deadline       ((t (:foreground ,alert :weight bold))))
+
+   ;; habits
+   `(org-habit-clear-face          ((t (:background ,dodger))))
+   `(org-habit-clear-future-face   ((t (:background ,sel))))
+   `(org-habit-ready-face          ((t (:background ,fine-plus))))
+   `(org-habit-ready-future-face   ((t (:background ,plus))))
+   `(org-habit-alert-face          ((t (:background ,fine-alt))))
+   `(org-habit-alert-future-face   ((t (:background ,warn-bg))))
+   `(org-habit-overdue-face        ((t (:background ,fine-minus))))
+   `(org-habit-overdue-future-face ((t (:background ,minus))))
+
+   ;; ---------------------------------------------------------------
+   ;; org-modern
+   ;; ---------------------------------------------------------------
+   `(org-modern-tag              ((t (:inherit org-modern-label :foreground ,slate-hi :background ,wash))))
+   `(org-modern-todo             ((t (:inherit (org-todo org-modern-label) :inverse-video t))))
+   `(org-modern-done             ((t (:inherit (org-done org-modern-label) :background ,wash))))
+   `(org-modern-priority         ((t (:inherit (org-priority org-modern-label) :inverse-video t))))
+   `(org-modern-date-active      ((t (:inherit org-modern-label :foreground ,sky :background ,wash))))
+   `(org-modern-date-inactive    ((t (:inherit org-modern-label :foreground ,fg-dim :background ,ink-soft))))
+   `(org-modern-time-active      ((t (:inherit org-modern-label :foreground ,fg-hi :background ,sel))))
+   `(org-modern-time-inactive    ((t (:inherit org-modern-label :foreground ,fg-dim :background ,wash-dim))))
+   `(org-modern-statistics       ((t (:inherit org-checkbox-statistics-todo))))
+   `(org-modern-horizontal-rule  ((t (:inherit org-hide :strike-through ,mute-low))))))
 
 (provide-theme 'blue-dark)

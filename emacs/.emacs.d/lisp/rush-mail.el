@@ -77,10 +77,7 @@
         notmuch-address-selection-function
         (lambda (prompt collection initial-input)
           (completing-read prompt collection nil nil initial-input
-                           'notmuch-address-history)))
-
-;;; Org links
-  (require 'ol-notmuch nil t))
+                           'notmuch-address-history))))
 
 ;;; On-demand sync
 (defun rush/mail-sync ()
@@ -105,6 +102,10 @@
        (message "Mail sync failed: journalctl --user -u mbsync"))))))
 
 (keymap-set global-map "C-c s" #'rush/mail-sync)
+
+(use-package ol-notmuch
+  :ensure t
+  :after notmuch)
 
 (provide 'rush-mail)
 ;;; rush-mail.el ends here

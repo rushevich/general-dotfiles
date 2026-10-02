@@ -11,7 +11,6 @@
 
 (setq org-agenda-files
       (list org-directory
-            (rush-org-file "life/job_applications/application_statuses.org")
             (expand-file-name "~/.config/emacs/todo.org")))
 
 (make-directory (rush-org-file "archive") t)
@@ -51,50 +50,32 @@
                         ("@errand" . ?e)
                         (:endgroup)
                         ("cpp"    . ?c)
-                        ("job"    . ?j)
                         ("sra"    . ?r)
                         ("config" . ?g)
                         ("mail"   . ?m)))
 
 ;;; Capture
-  (setq org-capture-bookmark nil
-        org-capture-templates
-        `(("t" "Task" entry
-           (file ,(rush-org-file "inbox.org"))
+  (setq org-capture-bookmark nil)
+  (setq org-capture-templates
+        `(("t" "Task" entry (file ,(rush-org-file "inbox.org"))
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
            :empty-lines 1)
-
-          ("l" "Task, linked to here" entry
-           (file ,(rush-org-file "inbox.org"))
+          ("d" "Task with deadline" entry (file ,(rush-org-file "inbox.org"))
+           "* TODO %?\nDEADLINE: %^t\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :empty-lines 1)
+          ("e" "Event" entry (file ,(rush-org-file "calendar.org"))
+           "* %?\n%^T\n:PROPERTIES:\n:CREATED: %U\n:END:"
+           :empty-lines 1)
+          ("n" "Note" entry (file+olp+datetree ,(rush-org-file "notes.org"))
+           "* %?\n%U\n%i"
+           :empty-lines 1)
+          ("l" "Task, linked to here" entry (file ,(rush-org-file "inbox.org"))
            "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n%i"
            :empty-lines 1)
-
-          ("n" "Note" entry
-           (file ,(rush-org-file "inbox.org"))
-           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%i"
-           :empty-lines 1)
-
-          ("j" "Job application" entry
-           (file+headline
-            ,(rush-org-file "life/job_applications/application_statuses.org")
-            "Applications")
-           ,(concat "* TODO %^{Company} :: %^{Role} :job:\n"
-                    ":PROPERTIES:\n"
-                    ":COMPANY:  %\\1\n"
-                    ":ROLE:     %\\2\n"
-                    ":LOCATION: %^{Location}\n"
-                    ":APPLIED:  %U\n"
-                    ":LINK:     %^{Posting URL}\n"
-                    ":END:\n%?")
-           :empty-lines 1)
-
-          ("m" "Follow up on this mail" entry
-           (file ,(rush-org-file "inbox.org"))
+          ("m" "Follow up on this mail" entry (file ,(rush-org-file "inbox.org"))
            "* TODO %:subject :mail:\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a\n%?"
            :empty-lines 1)
-
-          ("w" "Start working on something" entry
-           (file ,(rush-org-file "inbox.org"))
+          ("w" "Start working on something" entry (file ,(rush-org-file "inbox.org"))
            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
            :clock-in t :clock-resume t :empty-lines 1)))
 
@@ -139,22 +120,6 @@
         org-agenda-tags-column -100
         org-agenda-block-separator ?\u2500)
 
-  (setq org-agenda-custom-commands
-        `(("d" "Dashboard"
-           ((agenda "" ((org-agenda-span 3)
-                        (org-agenda-overriding-header "Next three days")))
-            (todo "NEXT"
-                  ((org-agenda-overriding-header "Actionable now")))
-            (todo "WAIT"
-                  ((org-agenda-overriding-header "Blocked, chase these")))
-            (todo ""
-                  ((org-agenda-files (list ,(rush-org-file "inbox.org")))
-                   (org-agenda-overriding-header "Inbox, needs refiling")))))
-
-          ("j" "Job pipeline" tags-todo "job"
-           ((org-agenda-overriding-header "Applications in flight")
-            (org-agenda-prefix-format "  %-12:c ")))))
-
 ;;; Babel
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -166,11 +131,59 @@
 ;;; Buffer setup
   (add-hook 'org-mode-hook
             (lambda ()
-              (visual-line-mode 1)
-              (display-line-numbers-mode -1))))
+              (visual-line-mode -1)
+              (setq-local truncate-lines t)
+              (display-line-numbers-mode -1))
+            90))
 
-;;
-;; #+COLUMNS: %30ITEM(What) %12TODO(State) %14LOCATION %16APPLIED %8CLOCKSUM
+(use-package org-modern
+  :ensure t
+  :hook (org-mode . org-modern-mode))
 
+(use-package org-appear
+  :ensure t
+  :hook (org-mode . org-appear-mode))
+
+(use-package olivetti
+  :ensure t
+  :hook (org-mode . olivetti-mode)
+  :custom
+  (olivetti-body-width 250))
+
+(setq org-hide-emphasis-markers t
+      org-pretty-entities t)
+(use-package org-super-agenda
+  :ensure t
+  :after org-agenda
+  :config (org-super-agenda-mode 1))
+
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
+(setq org-agenda-time-grid
+      '((daily today require-timed)
+        (800 1000 1200 1400 1600 1800 2000)
+        " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+      org-agenda-current-time-string "◀── now ─────────────"
+      org-agenda-prefix-format
+      '((agenda . " %?-12t% s")
+        (todo   . " ")
+        (tags   . " ")
+        (search . " ")))
+
+(setq org-agenda-custom-commands
+      `(("d" "Dashboard"
+         ((agenda ""
+                  ((org-agenda-span 'day)
+                   (org-super-agenda-groups
+                    '((:name "Overdue" :deadline past :scheduled past :order 0)
+                      (:name "Today" :time-grid t :date today :scheduled today :order 1)
+                      (:name "Due soon" :deadline future :order 2)))))
+          (alltodo ""
+                   ((org-agenda-overriding-header "")
+                    (org-super-agenda-groups
+                     '((:name "Next up" :todo "NEXT" :order 1)
+                       (:name "Waiting on" :todo "WAIT" :order 2)
+                       (:name "Inbox, needs refiling" :file-path "inbox" :order 3)
+                       (:discard (:anything t))))))))))
 (provide 'rush-org)
 ;;; rush-org.el ends here
