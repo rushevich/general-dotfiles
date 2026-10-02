@@ -357,6 +357,78 @@
    `(org-modern-time-active      ((t (:inherit org-modern-label :foreground ,fg-hi :background ,sel))))
    `(org-modern-time-inactive    ((t (:inherit org-modern-label :foreground ,fg-dim :background ,wash-dim))))
    `(org-modern-statistics       ((t (:inherit org-checkbox-statistics-todo))))
-   `(org-modern-horizontal-rule  ((t (:inherit org-hide :strike-through ,mute-low))))))
+   `(org-modern-horizontal-rule  ((t (:inherit org-hide :strike-through ,mute-low))))
+
+   ;; ---------------------------------------------------------------
+   ;; notmuch: search list
+   ;; ---------------------------------------------------------------
+   `(notmuch-search-date                  ((t (:foreground ,mute-hi))))
+   `(notmuch-search-count                 ((t (:foreground ,fg-dim))))
+   `(notmuch-search-subject               ((t (:foreground ,fg))))
+   `(notmuch-search-matching-authors      ((t (:foreground ,sky))))
+   `(notmuch-search-non-matching-authors  ((t (:foreground ,fg-dim))))
+   `(notmuch-search-unread-face           ((t (:foreground ,fg-hi :weight bold))))
+   `(notmuch-search-flagged-face          ((t (:foreground ,sand))))
+
+   ;; tags, same language as org tags
+   `(notmuch-tag-face                     ((t (:foreground ,slate :slant italic))))
+   `(notmuch-tag-unread                   ((t (:foreground ,cadet :slant italic))))
+   `(notmuch-tag-flagged                  ((t (:foreground ,sand :slant italic))))
+   `(notmuch-tag-added                    ((t (:foreground ,plus-hi :underline t))))
+   `(notmuch-tag-deleted                  ((t (:foreground ,minus-hi :strike-through t))))
+
+   ;; ---------------------------------------------------------------
+   ;; notmuch: tree view
+   ;; ---------------------------------------------------------------
+   `(notmuch-tree-match-face              ((t (:inherit default))))
+   `(notmuch-tree-match-date-face         ((t (:foreground ,mute-hi))))
+   `(notmuch-tree-match-author-face       ((t (:foreground ,sky))))
+   `(notmuch-tree-match-subject-face      ((t (:foreground ,fg))))
+   `(notmuch-tree-match-tag-face          ((t (:inherit notmuch-tag-face))))
+   `(notmuch-tree-match-tree-face         ((t (:foreground ,mute-low))))
+   `(notmuch-tree-no-match-face           ((t (:foreground ,mute-low))))
+   `(notmuch-tree-no-match-date-face      ((t (:inherit notmuch-tree-no-match-face))))
+   `(notmuch-tree-no-match-author-face    ((t (:inherit notmuch-tree-no-match-face))))
+   `(notmuch-tree-no-match-subject-face   ((t (:inherit notmuch-tree-no-match-face))))
+   `(notmuch-tree-no-match-tag-face       ((t (:inherit notmuch-tree-no-match-face :slant italic))))
+   `(notmuch-tree-no-match-tree-face      ((t (:inherit notmuch-tree-no-match-face))))
+
+   ;; ---------------------------------------------------------------
+   ;; notmuch: reading
+   ;; ---------------------------------------------------------------
+   `(notmuch-message-summary-face         ((t (:background ,ink-soft :extend t))))
+   `(notmuch-wash-cited-text              ((t (:inherit message-cited-text-1))))
+   `(notmuch-wash-toggle-button           ((t (:foreground ,mute-hi :background ,wash :extend t))))
+   `(notmuch-crypto-part-header           ((t (:foreground ,steel))))
+   `(notmuch-crypto-signature-good        ((t (:foreground ,plus-hi :weight bold))))
+   `(notmuch-crypto-signature-good-key    ((t (:foreground ,sky))))
+   `(notmuch-crypto-signature-bad         ((t (:foreground ,alert :weight bold))))
+   `(notmuch-crypto-signature-unknown     ((t (:foreground ,sand))))
+   `(notmuch-crypto-decryption            ((t (:foreground ,cadet))))
+   `(notmuch-jump-key                     ((t (:foreground ,cadet :background ,ink-soft :weight bold))))
+   `(notmuch-hello-logo-background        ((t (:background ,night))))
+
+   ;; notmuch-hello search box and saved-search buttons
+   `(widget-field                         ((t (:foreground ,fg :background ,wash :extend t))))
+   `(widget-single-line-field             ((t (:inherit widget-field))))
+   `(widget-button                        ((t (:foreground ,sky :weight bold))))
+
+   ;; ---------------------------------------------------------------
+   ;; message mode: headers and quoting in notmuch-show and compose
+   ;; ---------------------------------------------------------------
+   `(message-header-name                  ((t (:foreground ,mute-hi))))
+   `(message-header-subject               ((t (:foreground ,fg-hi :weight bold))))
+   `(message-header-to                    ((t (:foreground ,sky))))
+   `(message-header-cc                    ((t (:foreground ,slate-hi))))
+   `(message-header-newsgroups            ((t (:foreground ,steel))))
+   `(message-header-other                 ((t (:foreground ,fg-dim))))
+   `(message-header-xheader               ((t (:foreground ,mute))))
+   `(message-separator                    ((t (:foreground ,mute-low))))
+   `(message-signature-separator          ((t (:foreground ,mute-low))))
+   `(message-mml                          ((t (:foreground ,sea))))
+   `(message-cited-text-1                 ((t (:foreground ,pale-deep))))
+   `(message-cited-text-2                 ((t (:foreground ,slate))))
+   `(message-cited-text-3                 ((t (:foreground ,steel))))
+   `(message-cited-text-4                 ((t (:foreground ,mute))))))
 
 (provide-theme 'blue-dark)

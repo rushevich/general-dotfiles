@@ -77,7 +77,12 @@
         notmuch-address-selection-function
         (lambda (prompt collection initial-input)
           (completing-read prompt collection nil nil initial-input
-                           'notmuch-address-history))))
+                           'notmuch-address-history)))
+  (setq notmuch-search-line-faces
+      '(("deleted" . notmuch-tag-deleted)
+        ("spam"    . shadow)
+        ("unread"  . notmuch-search-unread-face)
+        ("flagged" . notmuch-search-flagged-face))))
 
 ;;; On-demand sync
 (defun rush/mail-sync ()

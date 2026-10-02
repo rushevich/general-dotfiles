@@ -7,7 +7,13 @@
   (setq leetcode-prefer-language "cpp"
         leetcode-save-solutions t
         leetcode-directory "~/leetcode")
-    (aio-defun leetcode--api-check-submission (interpret-id problem on-success)
+  
+  ;; covers find-file and leetcode's own auto-mode-alist lookup
+  (add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-ts-mode))
+  ;; covers anything that still goes through remapping
+  (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+  (add-hook 'c++-ts-mode-hook #'eglot-ensure)
+  (aio-defun leetcode--api-check-submission (interpret-id problem on-success)
     "Poll submission INTERPRET-ID until done, then call ON-SUCCESS."
     (let* ((title-slug (leetcode-problem-title-slug problem))
            (problem-id (leetcode-problem-id problem))
@@ -19,7 +25,7 @@
                                  (format leetcode--url-check-submission interpret-id))))
            (response-status (car response))
            (response-buffer (cdr response)))
-      (if-let ((error-info (plist-get response-status :error)))
+      (if-let* ((error-info (plist-get response-status :error)))
           (progn
             (switch-to-buffer response-buffer)
             (leetcode--warn "LeetCode check submission ERROR: %S" error-info))
