@@ -9,11 +9,49 @@
 
 (setq org-default-notes-file (rush-org-file "inbox.org"))
 
-(setq org-agenda-files
-      (list org-directory
-            (expand-file-name "~/.config/emacs/todo.org")))
-
 (make-directory (rush-org-file "archive") t)
+
+;;; Project TODO files
+(defun rush-org-project-todo-file ()
+  "TODO.org in the current project's root, or error if not in a project."
+  (if-let ((proj (project-current)))
+      (expand-file-name "TODO.org" (project-root proj))
+    (user-error "Not in a project")))
+
+(defun rush-org-project-todo-files ()
+  "TODO.org files in every known local project root."
+  (require 'project)
+  (seq-filter #'file-exists-p
+              (mapcar (lambda (root) (expand-file-name "TODO.org" root))
+                      (seq-remove #'file-remote-p
+                                  (project-known-project-roots)))))
+
+(defun rush-org-project-todo-buffer-p ()
+  "Non-nil if the current buffer visits a project TODO.org."
+  (and buffer-file-name
+       (string= (file-name-nondirectory buffer-file-name) "TODO.org")))
+
+(defun rush-org-agenda-project-name (item)
+  "Project name if agenda ITEM comes from a project TODO.org, else nil."
+  (when-let* ((marker (get-text-property 0 'org-marker item))
+              (file (buffer-file-name (marker-buffer marker)))
+              ((string= (file-name-nondirectory file) "TODO.org"))
+              (proj (project-current nil (file-name-directory file))))
+    (project-name proj)))
+
+;;; Agenda files
+(defvar rush-org-base-agenda-files
+  (list org-directory
+        (expand-file-name "~/.config/emacs/todo.org")))
+
+(defun rush-org-refresh-agenda-files (&rest _)
+  "Rebuild `org-agenda-files' from the base list plus project TODO files."
+  (setq org-agenda-files
+        (append rush-org-base-agenda-files
+                (rush-org-project-todo-files))))
+
+(rush-org-refresh-agenda-files)
+(advice-add 'org-agenda :before #'rush-org-refresh-agenda-files)
 
 (use-package org
   :ensure nil
@@ -26,6 +64,7 @@
   (setq org-M-RET-may-split-line '((default . nil))
         org-insert-heading-respect-content t
         org-hide-emphasis-markers t
+        org-pretty-entities t
         org-startup-folded 'content
         org-catch-invisible-edits 'show-and-error
         org-special-ctrl-a/e t)
@@ -77,7 +116,13 @@
            :empty-lines 1)
           ("w" "Start working on something" entry (file ,(rush-org-file "inbox.org"))
            "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:"
-           :clock-in t :clock-resume t :empty-lines 1)))
+           :clock-in t :clock-resume t :empty-lines 1)
+          ("p" "Project todo" entry
+           (file+headline rush-org-project-todo-file "Tasks")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n%a")
+          ("P" "Project todo (no link)" entry
+           (file+headline rush-org-project-todo-file "Tasks")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:")))
 
 ;;; Refile
   (setq org-refile-targets '((nil :maxlevel . 3)
@@ -89,6 +134,12 @@
 ;;; Archive
   (setq org-archive-location
         (concat (rush-org-file "archive/%s_archive") "::"))
+
+  ;; Project TODO.org files archive next to themselves, not into ~/org/archive
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (when (rush-org-project-todo-buffer-p)
+                (setq-local org-archive-location "%s_archive::"))))
 
 ;;; Clocking
   (require 'org-clock)
@@ -120,6 +171,36 @@
         org-agenda-tags-column -100
         org-agenda-block-separator ?\u2500)
 
+  (setq org-agenda-time-grid
+        '((daily today require-timed)
+          (800 1000 1200 1400 1600 1800 2000)
+          " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+        org-agenda-current-time-string "◀── now ─────────────"
+        org-agenda-prefix-format
+        '((agenda . " %?-12t% s")
+          (todo   . " ")
+          (tags   . " ")
+          (search . " ")))
+
+  (setq org-agenda-custom-commands
+        '(("d" "Dashboard"
+           ((agenda ""
+                    ((org-agenda-span 'day)
+                     (org-super-agenda-groups
+                      '((:name "Overdue" :deadline past :scheduled past :order 0)
+                        (:name "Today" :time-grid t :date today :scheduled today :order 1)
+                        (:name "Due soon" :deadline future :order 2)))))
+            (alltodo ""
+                     ((org-agenda-overriding-header "")
+                      (org-super-agenda-groups
+                       '((:name "Next up" :todo "NEXT" :order 1)
+                         (:name "Waiting on" :todo "WAIT" :order 2)
+                         (:name "Inbox, needs refiling" :file-path "inbox" :order 3)
+                         (:auto-map rush-org-agenda-project-name :order 4)
+                         (:discard (:anything t))))))))))
+
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
 ;;; Babel
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -150,40 +231,10 @@
   :custom
   (olivetti-body-width 250))
 
-(setq org-hide-emphasis-markers t
-      org-pretty-entities t)
 (use-package org-super-agenda
   :ensure t
   :after org-agenda
   :config (org-super-agenda-mode 1))
 
-(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-
-(setq org-agenda-time-grid
-      '((daily today require-timed)
-        (800 1000 1200 1400 1600 1800 2000)
-        " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
-      org-agenda-current-time-string "◀── now ─────────────"
-      org-agenda-prefix-format
-      '((agenda . " %?-12t% s")
-        (todo   . " ")
-        (tags   . " ")
-        (search . " ")))
-
-(setq org-agenda-custom-commands
-      `(("d" "Dashboard"
-         ((agenda ""
-                  ((org-agenda-span 'day)
-                   (org-super-agenda-groups
-                    '((:name "Overdue" :deadline past :scheduled past :order 0)
-                      (:name "Today" :time-grid t :date today :scheduled today :order 1)
-                      (:name "Due soon" :deadline future :order 2)))))
-          (alltodo ""
-                   ((org-agenda-overriding-header "")
-                    (org-super-agenda-groups
-                     '((:name "Next up" :todo "NEXT" :order 1)
-                       (:name "Waiting on" :todo "WAIT" :order 2)
-                       (:name "Inbox, needs refiling" :file-path "inbox" :order 3)
-                       (:discard (:anything t))))))))))
 (provide 'rush-org)
 ;;; rush-org.el ends here

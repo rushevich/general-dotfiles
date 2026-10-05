@@ -79,10 +79,10 @@
           (completing-read prompt collection nil nil initial-input
                            'notmuch-address-history)))
   (setq notmuch-search-line-faces
-      '(("deleted" . notmuch-tag-deleted)
-        ("spam"    . shadow)
-        ("unread"  . notmuch-search-unread-face)
-        ("flagged" . notmuch-search-flagged-face))))
+        '(("deleted" . notmuch-tag-deleted)
+          ("spam"    . shadow)
+          ("unread"  . notmuch-search-unread-face)
+          ("flagged" . notmuch-search-flagged-face))))
 
 ;;; On-demand sync
 (defun rush/mail-sync ()
@@ -132,6 +132,10 @@
 </div>
 #+end_export
 ")
+  (add-hook 'org-msg-edit-mode-hook
+            (lambda ()
+              (auto-fill-mode -1)
+              (visual-line-mode 1)))
   (org-msg-mode))
 
 (provide 'rush-mail)

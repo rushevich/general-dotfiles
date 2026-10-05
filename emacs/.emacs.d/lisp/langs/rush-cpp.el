@@ -89,5 +89,17 @@
       hs-indicator-type 'fringe
       hs-display-lines-hidden t)
 
+(defun rush-clang-format-buffer ()
+  (interactive)
+  (let ((src (current-buffer))
+        (file buffer-file-name))
+    (with-temp-buffer
+      (let ((out (current-buffer)))
+        (if (zerop (with-current-buffer src
+                     (call-process-region nil nil "clang-format" nil (list out nil) nil
+                                          (concat "--assume-filename=" file))))
+            (with-current-buffer src (replace-buffer-contents out))
+          (message "clang-format failed"))))))
+
 (provide 'rush-cpp)
 ;;; rush-cpp.el ends here

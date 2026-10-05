@@ -47,6 +47,12 @@
 
   :config
   ;; Report Eglot's LSP diagnostics through Flycheck
-  (global-flycheck-eglot-mode 1))       
+  (global-flycheck-eglot-mode 1))
+
+(with-eval-after-load 'flycheck
+  (setq-default flycheck-gcc-language-standard "c++26")
+  (setq-default flycheck-gcc-args '("-freflection"))
+  (add-hook 'c++-ts-mode-hook
+            (lambda () (flycheck-select-checker 'c/c++-gcc))))
 
 (provide 'rush-lsp)
