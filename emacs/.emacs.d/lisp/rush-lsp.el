@@ -10,7 +10,9 @@
   (setq read-process-output-max (* 4 1024 1024))
   (setq eglot-events-buffer-config '(:size 0))
   (setq eglot-autoshutdown t)
-  (setq eglot-extend-to-xref t))
+  (setq eglot-extend-to-xref t)
+  (add-to-list 'eglot-ignored-server-capabilities
+             :documentOnTypeFormattingProvider))
 
 (defun rush/eglot-format-on-save ()
   "Format with the LSP server on save, but only in served buffers."

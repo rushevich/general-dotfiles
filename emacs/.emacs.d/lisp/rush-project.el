@@ -13,7 +13,7 @@
 
 ;; This line ensures that C++ projects via CMake can be detected by project.el
 (setq project-vc-extra-root-markers
-      '("CMakeLists.txt" "compile_commands.json" ".slang" "slang.f"))
+      '("compile_commands.json" ".slang" "slang.f"))
 
 (require 'ansi-color)
 (setq compilation-scroll-output 'first-error
