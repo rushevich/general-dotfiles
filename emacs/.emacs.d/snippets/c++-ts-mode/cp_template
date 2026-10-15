@@ -5,11 +5,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-auto getIO(string file) {
-     ifstream in {file + ".in"};
-     ofstream out {file + ".out"};
-     return make_pair{std::move(in), std::move(out)};
-}
+#define GET_IO(s)                                                                                                      \
+    ifstream in{string{(s)} + ".in"};                                                                                  \
+    ofstream out{string{(s)} + ".out"};
 
 int main() {
     ios::sync_with_stdio(false);
