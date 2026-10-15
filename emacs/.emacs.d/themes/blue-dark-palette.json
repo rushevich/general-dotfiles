@@ -35,5 +35,21 @@
   "fine-plus": "#2b5a4a",
   "fine-minus": "#5c2a2a",
   "fine-alt": "#5a4a1e",
-  "plus-bright": "#8fd4b8"
+  "plus-bright": "#8fd4b8",
+  "ansi-black": "#171717",
+  "ansi-red": "#cd0000",
+  "ansi-green": "#6fb39a",
+  "ansi-yellow": "#eee685",
+  "ansi-blue": "#4682b4",
+  "ansi-magenta": "#9fb6cd",
+  "ansi-cyan": "#008b8b",
+  "ansi-white": "#b0c4de",
+  "ansi-bright-black": "#7d7d7d",
+  "ansi-bright-red": "#c26e6e",
+  "ansi-bright-green": "#8fd4b8",
+  "ansi-bright-yellow": "#ffb454",
+  "ansi-bright-blue": "#00b2ee",
+  "ansi-bright-magenta": "#add8e6",
+  "ansi-bright-cyan": "#8ee5ee",
+  "ansi-bright-white": "#efefef"
 }

@@ -50,4 +50,30 @@
 (use-package vundo
   :ensure t)
 
+(use-package pulsar
+  :ensure t
+  :config
+  (setq pulsar-delay 0.04
+        pulsar-iterations 12
+        pulsar-face 'pulsar-generic
+        pulsar-region-face 'pulsar-cyan
+        pulsar-region-change-face 'pulsar-green
+        pulsar-window-change-face 'pulsar-generic
+        pulsar-pulse-on-window-change t)
+
+  (dolist (fn '(flash-jump meow-visit meow-search meow-goto-line dired-jump))
+    (add-to-list 'pulsar-pulse-functions fn))
+
+  (dolist (fn '(meow-yank meow-save meow-replace meow-undo meow-undo-in-selection))
+    (add-to-list 'pulsar-pulse-region-functions fn))
+
+  (add-hook 'next-error-hook #'pulsar-pulse-line)
+  (add-hook 'imenu-after-jump-hook #'pulsar-recenter-center)
+  (add-hook 'imenu-after-jump-hook #'pulsar-reveal-entry)
+  (with-eval-after-load 'consult
+    (add-hook 'consult-after-jump-hook #'pulsar-recenter-center)
+    (add-hook 'consult-after-jump-hook #'pulsar-reveal-entry))
+
+  (pulsar-global-mode 1))
+
 (provide 'rush-editing)

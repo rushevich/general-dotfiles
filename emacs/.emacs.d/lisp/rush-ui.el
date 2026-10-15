@@ -10,8 +10,22 @@
       window-divider-default-bottom-width 0
       window-divider-default-places t)
 (window-divider-mode 1)
-;; This is a custom-theme. It is located in themes
-(load-theme 'blue-dark t)
+(defvar rush-theme-dark 'blue-dark)
+(defvar rush-theme-light 'blue-light)
+
+(defun rush-theme-load (theme)
+  "Disable every enabled theme, then load THEME."
+  (mapc #'disable-theme custom-enabled-themes)
+  (load-theme theme t))
+
+(defun rush-theme-toggle ()
+  "Switch between the dark and light blue themes."
+  (interactive)
+  (rush-theme-load (if (custom-theme-enabled-p rush-theme-dark)
+                       rush-theme-light
+                     rush-theme-dark)))
+
+(rush-theme-load rush-theme-dark)
 
 (dolist (mode-hook '(Info-mode-hook gud-mode-hook help-mode-hook eshell-mode-hook Man-mode-hook))
         (add-hook mode-hook

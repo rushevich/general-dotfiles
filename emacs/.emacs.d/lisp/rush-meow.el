@@ -51,6 +51,7 @@
    '(";" . "M-x")
    '(":" . "M-X")
    '("u" . vundo)
+   '("t" . rush-theme-toggle)
    
    ;; bookmarks
    '("RET" . consult-bookmark)
@@ -133,6 +134,8 @@
 
 (use-package meow
   :ensure (:host github :repo "meow-edit/meow")
+  :init
+  (setq meow-use-dynamic-face-color nil)
   :config
   (meow-setup)
   (meow-global-mode 1)
