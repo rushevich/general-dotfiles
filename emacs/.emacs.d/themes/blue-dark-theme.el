@@ -1,42 +1,23 @@
 ;;; blue-dark-theme.el --- blue/minimalistic palette theme -*- lexical-binding: t; -*-
 (deftheme blue-dark "dark theme by george")
 
-(let ((ink        "#111111")   ; background
-      (night      "#060708")
-      (ink-soft   "#171717")
-      (wash       "#1b1b1b")   ; subtle raised background
-      (wash-dim   "#3f3f3f")   ; subtle raised background
-      (mute-low   "#4f4f4f")
-      (mute       "#7d7d7d")
-      (mute-hi    "#7f7f7f")
-      (fg         "#e0eeee")   ; default foreground
-      (fg-hi      "#efefef")
-      (fg-dim     "#838b8b")
-      (pale-deep  "#668b8b")
-      (pale       "#add8e6")
-      (steel      "#4682b4")
-      (steel-hi   "#b0c4de")
-      (slate      "#778899")
-      (slate-hi   "#9fb6cd")
-      (sky        "#6ca6cd")
-      (deepsky    "#00688b")
-      (dodger     "#104e8b")
-      (cadet      "#8ee5ee")
-      (bright     "#00b2ee")
-      (vivid      "#0000ee")
-      (sea        "#008b8b")
-      (sand       "#eee685")
-      (alert      "#cd0000")
-      (sel        "#23394f")   ; region
-      (caret      "#ffb454")   ; cursor
-      (warn-bg    "#3a2f1c")   ; secondary selection
-      (plus       "#1e3a34")   ; diff added
-      (plus-hi    "#6fb39a")
-      (minus      "#3d1f1f")   ; diff removed
-      (minus-hi   "#c26e6e")
-      (fine-plus  "#2b5a4a")   ; ediff refinements
-      (fine-minus "#5c2a2a")
-      (fine-alt   "#5a4a1e"))
+(eval-and-compile
+  (defconst blue-dark--palette-file
+    (expand-file-name "blue-dark-palette.json"
+                      (file-name-directory
+                       (or load-file-name
+                           (bound-and-true-p byte-compile-current-file)
+                           buffer-file-name)))))
+
+(defmacro blue-dark--with-palette (&rest body)
+  "Evaluate BODY with every palette color bound as a lexical variable."
+  (let ((palette (with-temp-buffer
+                   (insert-file-contents blue-dark--palette-file)
+                   (json-parse-buffer :object-type 'alist))))
+    `(let ,(mapcar (lambda (c) (list (car c) (cdr c))) palette)
+       ,@body)))
+
+(blue-dark--with-palette
   (custom-theme-set-faces
    'blue-dark
 
@@ -55,8 +36,9 @@
    `(show-paren-match            ((t (:background ,deepsky))))
    `(show-paren-mismatch         ((t (:background ,alert :foreground ,fg-hi))))
    `(minibuffer-prompt           ((t (:foreground ,sky))))
-   `(highlight                   ((t (:inherit default :background ,deepsky))))
-   `(success                     ((t (:foreground ,fg :weight bold))))
+   `(highlight                   ((t (:background ,sel))))
+   `(hl-line                     ((t (:background ,ink-soft :extend t))))
+   `(success                     ((t (:foreground ,plus-hi :weight bold))))
    `(warning                     ((t (:foreground ,sand :weight bold))))
    `(error                       ((t (:foreground ,alert :weight bold))))
    `(fringe                      ((t (:background ,night :foreground ,mute-hi))))
@@ -66,7 +48,7 @@
    `(tooltip                     ((t (:background ,ink-soft :foreground ,fg))))
    `(trailing-whitespace         ((t (:background ,minus))))
    `(escape-glyph                ((t (:foreground ,sand))))
-   `(link                        ((t (:foreground ,dodger :underline t))))
+   `(link                        ((t (:foreground ,sky :underline t))))
    `(link-visited                ((t (:foreground ,slate :underline t))))
    `(help-key-binding            ((t (:foreground ,cadet :background ,ink-soft))))
    `(dired-broken-symlink        ((t (:background ,sand :foreground ,night :weight bold :slant italic))))
@@ -76,7 +58,7 @@
    ;; ---------------------------------------------------------------
    ;; search
    ;; ---------------------------------------------------------------
-   `(isearch                     ((t (:foreground ,fg :background ,vivid))))
+   `(isearch                     ((t (:foreground ,night :background ,bright :weight bold))))
    `(isearch-fail                ((t (:foreground ,fg-hi :background ,minus))))
    `(isearch-group-1             ((t (:foreground ,night :background ,cadet))))
    `(isearch-group-2             ((t (:foreground ,night :background ,sand))))
@@ -122,6 +104,52 @@
    `(font-lock-number-face           ((t (:foreground ,sand))))
    `(font-lock-escape-face           ((t (:foreground ,sand :weight bold))))
    `(font-lock-negation-char-face    ((t (:foreground ,alert))))
+
+   ;; ---------------------------------------------------------------
+   ;; ansi colors -- compilation, eshell, eat, magit-process.
+   ;; Same mapping as alacritty (nixos-config modules/_lib/palette.nix).
+   ;; ---------------------------------------------------------------
+   `(ansi-color-black          ((t (:foreground ,ink-soft :background ,ink-soft))))
+   `(ansi-color-red            ((t (:foreground ,alert    :background ,alert))))
+   `(ansi-color-green          ((t (:foreground ,plus-hi  :background ,plus-hi))))
+   `(ansi-color-yellow         ((t (:foreground ,sand     :background ,sand))))
+   `(ansi-color-blue           ((t (:foreground ,steel    :background ,steel))))
+   `(ansi-color-magenta        ((t (:foreground ,slate-hi :background ,slate-hi))))
+   `(ansi-color-cyan           ((t (:foreground ,sea      :background ,sea))))
+   `(ansi-color-white          ((t (:foreground ,steel-hi :background ,steel-hi))))
+   `(ansi-color-bright-black   ((t (:foreground ,mute     :background ,mute))))
+   `(ansi-color-bright-red     ((t (:foreground ,minus-hi :background ,minus-hi))))
+   `(ansi-color-bright-green   ((t (:foreground ,plus-bright :background ,plus-bright))))
+   `(ansi-color-bright-yellow  ((t (:foreground ,caret    :background ,caret))))
+   `(ansi-color-bright-blue    ((t (:foreground ,bright   :background ,bright))))
+   `(ansi-color-bright-magenta ((t (:foreground ,pale     :background ,pale))))
+   `(ansi-color-bright-cyan    ((t (:foreground ,cadet    :background ,cadet))))
+   `(ansi-color-bright-white   ((t (:foreground ,fg-hi    :background ,fg-hi))))
+
+   ;; ---------------------------------------------------------------
+   ;; magit (diff faces above cover most of it)
+   ;; ---------------------------------------------------------------
+   `(magit-section-heading            ((t (:foreground ,steel :weight bold))))
+   `(magit-section-highlight          ((t (:background ,ink-soft :extend t))))
+   `(magit-branch-local               ((t (:foreground ,cadet))))
+   `(magit-branch-remote              ((t (:foreground ,plus-hi))))
+   `(magit-branch-current             ((t (:foreground ,cadet :box (:line-width -1 :color ,cadet)))))
+   `(magit-hash                       ((t (:foreground ,mute))))
+   `(magit-tag                        ((t (:foreground ,sand))))
+   `(magit-diff-hunk-heading          ((t (:inherit diff-hunk-header))))
+   `(magit-diff-hunk-heading-highlight ((t (:background ,sel :foreground ,fg-hi :extend t))))
+   `(magit-diff-context-highlight     ((t (:background ,ink-soft :foreground ,fg-dim :extend t))))
+   `(magit-diff-added-highlight       ((t (:background ,fine-plus :extend t))))
+   `(magit-diff-removed-highlight     ((t (:background ,fine-minus :extend t))))
+
+   ;; ---------------------------------------------------------------
+   ;; which-key
+   ;; ---------------------------------------------------------------
+   `(which-key-key-face                   ((t (:foreground ,cadet :weight bold))))
+   `(which-key-separator-face             ((t (:foreground ,mute-low))))
+   `(which-key-command-description-face   ((t (:foreground ,fg))))
+   `(which-key-group-description-face     ((t (:foreground ,sky))))
+   `(which-key-local-map-description-face ((t (:foreground ,slate-hi))))
 
    ;; ---------------------------------------------------------------
    ;; eglot
@@ -198,8 +226,6 @@
    `(vertico-group-separator     ((t (:inherit shadow :strike-through t))))
    `(vertico-multiline           ((t (:inherit shadow))))
 
-   ;; matched substrings inside a candidate; upstream defaults are
-   ;; green/purple/orange and clash badly here
    `(orderless-match-face-0      ((t (:foreground ,bright :weight bold))))
    `(orderless-match-face-1      ((t (:foreground ,cadet :weight bold))))
    `(orderless-match-face-2      ((t (:foreground ,sand :weight bold))))

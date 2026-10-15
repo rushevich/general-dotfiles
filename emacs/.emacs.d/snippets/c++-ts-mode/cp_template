@@ -4,6 +4,13 @@
 # --
 #include <bits/stdc++.h>
 using namespace std;
+
+auto getIO(string file) {
+     ifstream in {file + ".in"};
+     ofstream out {file + ".out"};
+     return make_pair{std::move(in), std::move(out)};
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
