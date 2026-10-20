@@ -208,6 +208,17 @@
      (shell . t)
      (emacs-lisp . t)))
   (setq org-confirm-babel-evaluate nil)
+  
+;;; Export
+(require 'ox-latex)
+(setq org-latex-compiler "xelatex"
+      org-latex-pdf-process
+      '("latexmk -xelatex -interaction=nonstopmode -output-directory=%o %f")
+      org-export-with-smart-quotes t)
+(add-to-list 'org-latex-packages-alist '("" "fontspec" t ("xelatex")))
+(add-to-list 'org-latex-packages-alist
+             "\\setmainfont{Noto Serif}\n\\setmonofont{Iosevka Nerd Font Mono}[Scale=MatchLowercase]")
+(add-to-list 'org-file-apps '("\\.pdf\\'" . "sioyek %s"))
 
 ;;; Buffer setup
   (add-hook 'org-mode-hook

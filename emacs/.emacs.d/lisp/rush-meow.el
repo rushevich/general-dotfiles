@@ -26,6 +26,8 @@
    '("s" . save-buffer)
    '("k" . kill-current-buffer)
    '("d" . dired-jump)
+   '("o" . ghostel-project)
+   '("O" . ghostel)
 
    ;; search and navigation
    '("l" . consult-line)
@@ -141,6 +143,7 @@
   (meow-global-mode 1)
   (setq meow-use-clipboard t)
   (dolist (rule '((eshell-mode . insert)
+                  (ghostel-mode . insert)
                   (notmuch-hello-mode . motion)
                   (notmuch-search-mode . motion)
                   (notmuch-tree-mode . motion)

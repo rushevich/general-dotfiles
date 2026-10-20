@@ -61,6 +61,7 @@
   :after envrc
   :config
   (inheritenv-add-advice 'gdb)
-  (inheritenv-add-advice 'compile))
+  (inheritenv-add-advice 'compile)
+  (inheritenv-add-advice 'ghostel))
 
 (provide 'rush-project)

@@ -27,7 +27,7 @@
 
 (rush-theme-load rush-theme-dark)
 
-(dolist (mode-hook '(Info-mode-hook gud-mode-hook help-mode-hook eshell-mode-hook Man-mode-hook))
+(dolist (mode-hook '(Info-mode-hook gud-mode-hook help-mode-hook eshell-mode-hook ghostel-mode-hook Man-mode-hook))
         (add-hook mode-hook
                   (lambda () (display-line-numbers-mode -1))))
 
@@ -143,9 +143,10 @@
                 "    "
                 rush-modeline-major-mode
                 rush-modeline-flycheck
-                mode-line-format-right-align
                 rush-modeline-vc-info
-                "   "
-                rush-modeline-datetime))
+                mode-line-format-right-align
+                "      "
+                ;rush-modeline-datetime
+                ))
 
 (provide 'rush-ui)
