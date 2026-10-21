@@ -5,12 +5,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define GET_IO(s)                                                                                                      \
-    ifstream in{string{(s)} + ".in"};                                                                                  \
-    ofstream out{string{(s)} + ".out"};
-
+$1
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
+#ifdef FILE
+    freopen("${2:filename}.in", "r", stdin);
+    freopen("$2.out", "w", stdout);
+#endif
     $0
 }
