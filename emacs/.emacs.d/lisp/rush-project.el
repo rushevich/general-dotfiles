@@ -1,15 +1,22 @@
 ;; -*- lexical-binding: t; -*-
 
-;; Install magit
-;; TODO: make magit open in a maximized window and mess with the window rules in general
-(use-package magit
-  :ensure t)
 
 ;; Maybe it is better to use wgrep but we can play with both
 (use-package deadgrep
   :ensure t)
 
 (require 'project)
+
+(use-package magit
+  :ensure t
+  :bind (:map project-prefix-map
+         ("v" . magit-project-status))
+  :init
+  (setq magit-bind-magit-project-status nil)
+  (add-to-list 'project-switch-commands '(magit-project-status "Magit") t)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1)
+  (magit-bury-buffer-function #'magit-restore-window-configuration))
 
 ;; This line ensures that C++ projects via CMake can be detected by project.el
 (setq project-vc-extra-root-markers

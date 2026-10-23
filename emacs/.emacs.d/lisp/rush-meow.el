@@ -26,9 +26,11 @@
    '("s" . save-buffer)
    '("k" . kill-current-buffer)
    '("d" . dired-jump)
-   '("o" . ghostel-project)
-   '("O" . ghostel)
 
+   ;; terminal & git
+   '("t" . ghostel)
+   '("v" . magit-status)
+   
    ;; search and navigation
    '("l" . consult-line)
    '("i" . consult-imenu)
@@ -43,9 +45,6 @@
    '("w s" . split-window-below)
    '("w v" . split-window-right)
 
-   ;; version control
-   '("_" . (lambda () (interactive) (require 'magit) (magit-status)))
-
    ;; prefix maps
    '("p" . "C-x p") ;; maps to project commands
 
@@ -53,15 +52,15 @@
    '(";" . "M-x")
    '(":" . "M-X")
    '("u" . vundo)
-   '("t" . rush-theme-toggle)
+   '("T" . rush-theme-toggle)
    
    ;; bookmarks
    '("RET" . consult-bookmark)
    '("B" . bookmark-set)
 
    ;; mail
-   '("m" . notmuch)
-   '("M" . notmuch-jump-search))
+   '("n" . notmuch)
+   '("N" . notmuch-jump-search))
   (meow-normal-define-key
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)

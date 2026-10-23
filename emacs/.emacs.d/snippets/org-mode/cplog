@@ -2,9 +2,9 @@
 # name: CP log entry
 # key: cplog
 # --
-** ${1:USACO} :: ${2:Problem}  :${3:$$(yas-choose-value '("observation" "technique" "impl" "edge" "misread" "time"))}:${4:topic}:
+** ${1:USACO} :: ${2:Problem}  :${3:$$(yas-choose-value '("observation" "technique" "impl" "edge" "misread" "time" "clean"))}:${4:topic}:
 :PROPERTIES:
-:RESULT:   ${5:$$(yas-choose-value '("solo" "almost" "hint" "editorial"))}
+:RESULT:   ${5:$$(yas-choose-value '("solo" "almost" "hint" "editorial" "guided"))}
 :TIME:     ${6:60}m
 :FELT:     ${7:$$(yas-choose-value '("1" "2" "3" "4" "5"))}
 :RETRY:    `(format-time-string "<%Y-%m-%d>" (time-add nil (* 7 24 60 60)))`
