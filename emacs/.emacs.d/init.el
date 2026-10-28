@@ -98,6 +98,7 @@
 (require 'rush-treesit)
 (require 'rush-lsp)
 (require 'rush-cpp)
+(require 'rush-compprog)
 (require 'rush-cmake)
 (require 'rush-misc-langs)
 (require 'rush-meow)
