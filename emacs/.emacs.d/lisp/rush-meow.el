@@ -28,7 +28,7 @@
    '("d" . dired-jump)
 
    ;; terminal & git
-   '("t" . ghostel)
+   '("t" . rush/eshell-toggle)
    '("v" . magit-status)
    
    ;; search and navigation

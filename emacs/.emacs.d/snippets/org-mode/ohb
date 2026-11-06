@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: org_header_basic
+# key: OrgHeaderB
+# --
+#+TITLE: ${1:Title}
+#+STARTUP: overview
+#+OPTIONS: ^:nil
