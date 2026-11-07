@@ -1,9 +1,0 @@
-# -*- mode: snippet -*-
-# name: Doxygen
-# key: <dg
-# --
-    /**
-     * @brief ${1:description}
-     * @$0
-     */
-     

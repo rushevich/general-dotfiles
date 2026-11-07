@@ -99,6 +99,7 @@
 (require 'rush-treesit)
 (require 'rush-lsp)
 (require 'rush-cpp)
+(require 'rush-comments)
 (require 'rush-compprog)
 (require 'rush-cmake)
 (require 'rush-misc-langs)

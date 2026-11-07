@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: doxygen block
+# key: <dg
+# expand-env: ((yas-indent-line 'fixed))
+# --
+/**
+ * @brief ${1:description}
+ *
+ * $0
+ */

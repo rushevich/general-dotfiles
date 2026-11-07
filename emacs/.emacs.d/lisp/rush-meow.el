@@ -51,6 +51,7 @@
   ;; primitive maps
    '(";" . "M-x")
    '(":" . "M-X")
+   '("/" . comment-line)
    '("u" . vundo)
    '("T" . rush-theme-toggle)
    
@@ -164,6 +165,7 @@
   (meow-thing-register 'backtick
                        '(regexp "`" "`")
                        '(regexp "`" "`"))
+  (meow-thing-register 'comment #'rush-comment-inner #'rush-comment-bounds)
   (setq meow-char-thing-table
         '((?\( . round)
           (?\[ . square)
@@ -177,7 +179,8 @@
           (?b . buffer)
           (?p . paragraph)
           (?l . line)
-          (?d . defun))))
+          (?d . defun)
+          (?c . comment))))
 
 (provide 'rush-meow)
 ;;; rush-meow.el ends here
