@@ -30,8 +30,8 @@
 ;;;; Prompt (mirrors the zsh one: user, dir, branch, arrow)
 
 (defun rush/eshell--branch ()
-  (when (require 'magit-git nil t)
-    (magit-get-current-branch)))
+  (when (locate-dominating-file default-directory ".git")
+    (car (process-lines-ignore-status "git" "branch" "--show-current"))))
 
 (defun rush/eshell-prompt ()
   (let ((branch (rush/eshell--branch))
@@ -97,16 +97,11 @@
 
 ;;;; Packages
 
-;; Full-screen programs (htop, less, git log) render inline instead of in term
-(use-package eat
-  :ensure (:host codeberg :repo "akib/emacs-eat"
-           :files ("*.el" ("term" "term/*.el") "*.texi" "*.ti"
-                   ("terminfo/e" "terminfo/e/*")
-                   ("terminfo/65" "terminfo/65/*")
-                   ("integration" "integration/*")
-                   (:exclude ".dir-locals.el" "*-tests.el")))
-  :hook ((eshell-load . eat-eshell-mode)
-         (eshell-load . eat-eshell-visual-command-mode)))
+(with-eval-after-load 'em-term
+  (setq eshell-destroy-buffer-when-process-dies t)
+  (dolist (cmd '("btop" "nvim" "lazygit"))
+    (add-to-list 'eshell-visual-commands cmd))
+  (add-to-list 'eshell-visual-subcommands '("git" "log" "diff" "show")))
 
 ;; zsh-fast-syntax-highlighting equivalent
 (use-package eshell-syntax-highlighting

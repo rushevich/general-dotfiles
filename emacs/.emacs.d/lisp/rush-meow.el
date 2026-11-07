@@ -60,7 +60,11 @@
 
    ;; mail
    '("n" . notmuch)
-   '("N" . notmuch-jump-search))
+   '("N" . notmuch-jump-search)
+   
+   ;; zoom (global, all buffers)
+   '("=" . "C-x C-M-+")
+   '("-" . "C-x C-M--"))
   (meow-normal-define-key
    '("0" . meow-expand-0)
    '("9" . meow-expand-9)
