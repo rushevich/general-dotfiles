@@ -12,7 +12,7 @@
   "Competitive programming helpers."
   :group 'tools)
 
-(defcustom rush-compprog-directory (expand-file-name "~/project/compprog/")
+(defcustom rush-compprog-directory (expand-file-name "~/projects/compprog/")
   "Root directory for parsed problems."
   :type 'directory)
 

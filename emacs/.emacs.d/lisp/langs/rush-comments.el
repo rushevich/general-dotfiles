@@ -1,8 +1,9 @@
 ;;; rush-comments.el --- comment QoL for C and C++ -*- lexical-binding: t; -*-
 
 ;;; Commentary:
-;; RET that understands comments, `/**' + RET block expansion, a meow
-;; `comment' thing, comment-only auto-fill, and TODO highlighting.
+;; RET that understands comments, `/**' + RET block expansion, auto-closing
+;; `/* */', a meow `comment' thing, comment-only auto-fill, and TODO
+;; highlighting.
 
 ;;; Code:
 
@@ -11,8 +12,6 @@
 Doc comments (`///', `//!') and block comments always continue.
 C-<return> (`default-indent-new-line') still continues any comment.")
 
-;; electric-quote-mode turns ' into a curly quote inside prog-mode comments,
-;; which wrecks things like `don't' and `std::vector<T>'s' in C++ comments.
 (setq electric-quote-comment nil)
 
 ;;; detection
@@ -64,9 +63,7 @@ C-<return> (`default-indent-new-line') still continues any comment.")
       (insert " */"))))
 
 (defun rush-comment--continue ()
-  "Break the line inside a comment and repeat its prefix.
-Done by hand instead of `default-indent-new-line' so it behaves the
-same across Emacs versions and never closes the block early."
+  "Break the line inside a comment and repeat its prefix."
   (let* ((start (nth 8 (syntax-ppss)))
          (line-comment (save-excursion (goto-char start) (looking-at-p "//")))
          indent prefix)
@@ -101,12 +98,44 @@ Expands a bare `/**' into a closed block, continues block and doc
 comments with the right prefix, and otherwise behaves like `newline'."
   (interactive)
   (cond
+   ((and (string-match-p (rx bos (* blank) "/*" (? (any "*!")) eos)
+                         (buffer-substring-no-properties
+                          (line-beginning-position) (point)))
+         (looking-at (rx (* blank) "*/" (* blank) eol)))
+    (delete-region (point) (match-end 0))
+    (rush-comment--expand-block))
    ((and (rush-comment--opener-before-point-p)
          (not (rush-comment--closed-p)))
     (rush-comment--expand-block))
    ((rush-comment--should-continue-p)
     (rush-comment--continue))
    (t (call-interactively #'newline))))
+
+;;; auto-closing /* */
+
+(defun rush-comment--auto-close ()
+  "Pair `/*' with ` */' as you type; typing your own `*/' replaces it."
+  (pcase last-command-event
+    (?*
+     (when (and (eq (char-before (1- (point))) ?/)
+                (not (nth 8 (save-excursion (syntax-ppss (- (point) 2)))))
+                (not (rush-comment--closed-p)))
+       (save-excursion (insert " */"))))
+    (?/
+     (when (and (eq (char-before (1- (point))) ?*)
+                (nth 4 (save-excursion (syntax-ppss (- (point) 2))))
+                (looking-at (rx (* blank) "*/")))
+       (delete-region (point) (match-end 0))))))
+
+(defun rush-comment-backspace ()
+  "Backspace that removes an untouched ` */' along with its `/*'."
+  (interactive)
+  (if (and (eq (char-before) ?*)
+           (eq (char-before (1- (point))) ?/)
+           (looking-at (rx " */")))
+      (progn (delete-region (point) (match-end 0))
+             (delete-char -1))
+    (call-interactively #'backward-delete-char-untabify)))
 
 ;;; meow `comment' thing
 
@@ -164,12 +193,14 @@ comments with the right prefix, and otherwise behaves like `newline'."
   ;; wrap only while typing inside comments; keep in sync with .clang-format
   (setq-local fill-column 80
               comment-auto-fill-only-comments t)
-  (auto-fill-mode 1))
+  (auto-fill-mode 1)
+  (add-hook 'post-self-insert-hook #'rush-comment--auto-close nil t))
 
 (add-hook 'c-ts-base-mode-hook #'rush-comment-setup)
 
 (with-eval-after-load 'c-ts-mode
-  (keymap-set c-ts-base-mode-map "RET" #'rush-comment-newline))
+  (keymap-set c-ts-base-mode-map "RET" #'rush-comment-newline)
+  (keymap-set c-ts-base-mode-map "DEL" #'rush-comment-backspace))
 
 (use-package hl-todo
   :ensure t
