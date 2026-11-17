@@ -44,6 +44,27 @@
    '("w d" . delete-window)
    '("w s" . split-window-below)
    '("w v" . split-window-right)
+   '("w u" . tab-bar-history-back)       ; undo a layout change
+   '("w r" . tab-bar-history-forward)    ; redo it
+
+   ;; tabs as workspaces (see rush-tabs.el)
+   '("W W" . tab-switch)
+   '("W n" . tab-new)
+   '("W d" . tab-close)
+   '("W r" . tab-rename)
+   '("W u" . tab-undo)                   ; reopen the last closed tab
+   '("W p" . rush-tab-project)
+   '("W ]" . tab-next)
+   '("W [" . tab-previous)
+   '("W 1" . rush-tab-select-1)
+   '("W 2" . rush-tab-select-2)
+   '("W 3" . rush-tab-select-3)
+   '("W 4" . rush-tab-select-4)
+   '("W 5" . rush-tab-select-5)
+   '("W 6" . rush-tab-select-6)
+   '("W 7" . rush-tab-select-7)
+   '("W 8" . rush-tab-select-8)
+   '("W 9" . rush-tab-select-9)
 
    ;; prefix maps
    '("p" . "C-x p") ;; maps to project commands

@@ -95,6 +95,7 @@
 (require 'rush-org)
 (require 'rush-mail)
 (require 'rush-ui)
+(require 'rush-tabs)
 (require 'rush-editing)
 (require 'rush-treesit)
 (require 'rush-lsp)

@@ -83,6 +83,19 @@
     `(rush-modeline-bar-inactive ((t (:foreground ,ink-soft))))
 
     ;; ---------------------------------------------------------------
+    ;; tab bar -- same overline language as the mode line
+    ;; ---------------------------------------------------------------
+    `(tab-bar                    ((t (:foreground ,fg-dim :background ,night))))
+    `(tab-bar-tab                ((t (:foreground ,fg-hi :background ,ink-soft :weight bold
+                                                  :box (:line-width 4 :color ,ink-soft) :overline ,bright))))
+    `(tab-bar-tab-inactive       ((t (:foreground ,fg-dim :background ,night
+                                                  :box (:line-width 4 :color ,night) :overline ,wash-dim))))
+    `(tab-bar-tab-highlight      ((t (:foreground ,fg-hi :background ,sel))))
+    `(tab-bar-tab-group-current  ((t (:inherit tab-bar-tab :foreground ,cadet))))
+    `(tab-bar-tab-group-inactive ((t (:inherit tab-bar-tab-inactive :foreground ,mute-hi))))
+    `(tab-bar-tab-ungrouped      ((t (:inherit tab-bar-tab-inactive))))
+
+    ;; ---------------------------------------------------------------
     ;; font lock
     ;; ---------------------------------------------------------------
     `(font-lock-keyword-face       ((t (:foreground ,steel))))
