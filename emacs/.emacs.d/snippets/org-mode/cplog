@@ -1,14 +1,13 @@
 # -*- mode: snippet -*-
-# name: CP log entry
+# name: CP log entry (index)
 # key: cplog
 # --
 ** ${1:USACO} :: ${2:Problem}  :${3:$$(yas-choose-value '("observation" "technique" "impl" "edge" "misread" "time" "clean"))}:${4:topic}:
+SCHEDULED: `(format-time-string "<%Y-%m-%d %a>" (time-add nil (* 7 24 60 60)))`
 :PROPERTIES:
-:RESULT:   ${5:$$(yas-choose-value '("solo" "almost" "hint" "editorial" "guided"))}
+:RESULT:   ${5:$$(yas-choose-value '("solo" "almost" "hint" "editorial" "guided" "upsolved"))}
 :TIME:     ${6:60}m
 :FELT:     ${7:$$(yas-choose-value '("1" "2" "3" "4" "5"))}
-:RETRY:    `(format-time-string "<%Y-%m-%d>" (time-add nil (* 7 24 60 60)))`
 :END:
-- Insight :: $8
-- Cue :: $9
-- Mistake :: $0
+[[file:${8:usaco/name}.org][notes]] | [[file:$8.cpp][code]]
+$0

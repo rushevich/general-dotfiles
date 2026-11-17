@@ -42,7 +42,8 @@
 ;;; Agenda files
 (defvar rush-org-base-agenda-files
   (list org-directory
-        (expand-file-name "~/.config/emacs/todo.org")))
+        (expand-file-name "~/.config/emacs/todo.org")
+        (expand-file-name "~/projects/compprog/log.org")))
 
 (defun rush-org-refresh-agenda-files (&rest _)
   "Rebuild `org-agenda-files' from the base list plus project TODO files."
