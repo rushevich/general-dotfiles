@@ -191,7 +191,7 @@ comments with the right prefix, and otherwise behaves like `newline'."
 (defun rush-comment-setup ()
   "Per-buffer comment setup for C and C++."
   ;; wrap only while typing inside comments; keep in sync with .clang-format
-  (setq-local fill-column 80
+  (setq-local fill-column 150
               comment-auto-fill-only-comments t)
   (auto-fill-mode 1)
   (add-hook 'post-self-insert-hook #'rush-comment--auto-close nil t))

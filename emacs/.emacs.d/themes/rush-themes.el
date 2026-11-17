@@ -1,25 +1,29 @@
-;;; blue-themes.el --- shared faces for blue-dark / blue-light -*- lexical-binding: t; -*-
+;;; rush-themes.el --- shared faces for every rush theme -*- lexical-binding: t; -*-
 
-;; Both themes share one face list. Each variant only differs in its
-;; palette json (blue-<variant>-palette.json), which the NixOS flake
-;; also reads, so alacritty, fuzzel, mako, etc. stay in sync.
+;; Every theme shares one face list. A theme only differs in its
+;; palette json (<theme>-palette.json, e.g. blue-dark-palette.json),
+;; which the NixOS flake also reads, so alacritty, fuzzel, mako, etc.
+;; stay in sync.
 ;;
-;; Palette keys are color *slots*: in blue-light, `night' is still the
-;; default background and `caret' is still the cursor, they are just
-;; light-appropriate colors. Keep the same keys in both json files.
+;; Palette keys are color *slots*: in a light theme, `night' is still
+;; the default background and `caret' is still the cursor, they are
+;; just light-appropriate colors. Keep the same keys in every json file.
+;;
+;; Adding a theme: write <name>-palette.json with the same keys, then a
+;; <name>-theme.el that calls (rush-themes-define <name>).
 
-(defconst blue-themes-directory
+(defconst rush-themes-directory
   (file-name-directory (or load-file-name buffer-file-name)))
 
-(defun blue-themes--palette (variant)
-  "Read the palette alist for VARIANT (a symbol like `dark')."
+(defun rush-themes--palette (theme)
+  "Read the palette alist for THEME from THEME-palette.json."
   (with-temp-buffer
     (insert-file-contents
-     (expand-file-name (format "blue-%s-palette.json" variant)
-                       blue-themes-directory))
+     (expand-file-name (format "%s-palette.json" theme)
+                       rush-themes-directory))
     (json-parse-buffer :object-type 'alist)))
 
-(defconst blue-themes-faces
+(defconst rush-themes-faces
   '(
 
     ;; ---------------------------------------------------------------
@@ -505,13 +509,13 @@
     `(message-cited-text-3                 ((t (:foreground ,steel))))
     `(message-cited-text-4                 ((t (:foreground ,mute))))
     )
-  "Face specs shared by every blue theme. Colors are palette slot names.")
+  "Face specs shared by every rush theme. Colors are palette slot names.")
 
-(defmacro blue-themes-define (theme variant)
-  "Set the faces of THEME using the palette for VARIANT."
+(defmacro rush-themes-define (theme)
+  "Set the faces of THEME using THEME-palette.json."
   `(let ,(mapcar (lambda (c) (list (car c) (cdr c)))
-                 (blue-themes--palette variant))
-     (custom-theme-set-faces ',theme ,@blue-themes-faces)))
+                 (rush-themes--palette theme))
+     (custom-theme-set-faces ',theme ,@rush-themes-faces)))
 
-(provide 'blue-themes)
-;;; blue-themes.el ends here
+(provide 'rush-themes)
+;;; rush-themes.el ends here

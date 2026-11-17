@@ -220,6 +220,14 @@
              "\\setmainfont{Noto Serif}\n\\setmonofont{Iosevka Nerd Font Mono}[Scale=MatchLowercase]")
 (add-to-list 'org-file-apps '("\\.pdf\\'" . "sioyek %s"))
 
+(use-package engrave-faces :ensure t)
+
+(setq org-latex-src-block-backend 'engraved
+      org-latex-engraved-theme nil)
+
+(add-to-list 'org-latex-packages-alist '("margin=1in" "geometry"))
+(add-to-list 'org-latex-packages-alist '("" "parskip"))
+
 ;;; Buffer setup
   (add-hook 'org-mode-hook
             (lambda ()
