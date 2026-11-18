@@ -103,6 +103,11 @@
     (add-to-list 'eshell-visual-commands cmd))
   (add-to-list 'eshell-visual-subcommands '("git" "log" "diff" "show")))
 
+;; Run those visual commands in a ghostel buffer instead of the slow term.el
+(use-package ghostel-eshell
+  :ensure nil
+  :hook (eshell-load . ghostel-eshell-visual-command-mode))
+
 ;; zsh-fast-syntax-highlighting equivalent
 (use-package eshell-syntax-highlighting
   :ensure t
@@ -119,9 +124,13 @@
   :ensure t
   :after pcomplete)
 
-;; Auto-popup corfu only in eshell
+;; Keep per-keystroke work cheap. Ghost text comes from history only; by
+;; default capf-autosuggest falls back to full pcomplete (and pcmpl-args
+;; shelling out to --help) on every keystroke. Full completion stays on TAB.
 (add-hook 'eshell-mode-hook
-          (lambda () (setq-local corfu-auto t corfu-auto-prefix 2)))
+          (lambda ()
+            (setq-local capf-autosuggest-capf-functions
+                        '(capf-autosuggest-history-capf))))
 
 ;; macOS GUI Emacs doesn't inherit the zsh PATH (homebrew llvm, ~/scripts)
 (use-package exec-path-from-shell

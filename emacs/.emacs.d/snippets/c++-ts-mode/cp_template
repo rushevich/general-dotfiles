@@ -9,13 +9,17 @@ using ll = long long;
 #define all(x) begin((x)), end((x))
 #define sci(x) static_cast<int>((x))
 
-$1
+void open_file(string name, bool usaco = false) {
+    freopen((name + (usaco ? ".in" : "")).c_str(), "r", stdin);
+    freopen((name + (usaco ? ".out" : "")).c_str(), "w", stdout);
+}
+
+void solve();
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-#ifdef USE_FILE
-    freopen("${2:filename}.in", "r", stdin);
-    freopen("$2.out", "w", stdout);
-#endif
     $0
 }
+
+void solve() {}
