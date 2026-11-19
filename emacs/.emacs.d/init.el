@@ -87,6 +87,7 @@
 
 ;; Require all modules that we create within `user-lisp-directory'
 (require 'rush-defaults)
+(require 'rush-remote)
 (require 'rush-tools)
 (require 'rush-completion)
 (require 'rush-project)
