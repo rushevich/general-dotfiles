@@ -1,0 +1,8 @@
+add-auto-load-safe-path /nix/store
+
+set print pretty on
+set print object on
+set print static-members off
+set print vtbl on
+set print asm-demangle on
+set print elements 500

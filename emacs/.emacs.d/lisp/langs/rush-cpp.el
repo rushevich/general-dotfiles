@@ -75,7 +75,10 @@
       gdb-stack-buffer-addresses t
       gdb-stack-buffer-locations t
       gdb-thread-buffer-addresses t
-      gud-highlight-current-line t)
+      gud-highlight-current-line t
+      ;; show full pretty-printed containers in the locals buffer (default 100)
+      gdb-locals-value-limit 1000
+      gdb-locals-table-row-config '((name . 20) (type . 30) (value . 1000)))
 
 (add-hook 'gdb-frames-mode-hook #'hl-line-mode)
 (add-hook 'gdb-threads-mode-hook #'hl-line-mode)
