@@ -8,6 +8,7 @@
 ;; stock C-x t map (SPC x t) still works too.
 
 (require 'project)
+(require 'tab-bar)
 
 ;; Only draw the bar once a second tab exists, so a single-task
 ;; session looks exactly like it did before.
@@ -46,6 +47,16 @@ tab, name it after the project, and switch to the project there."
     (defalias (intern (format "rush-tab-select-%d" n))
       (lambda () (interactive) (tab-bar-select-tab n))
       (format "Select tab number %d." n))))
+
+;; After SPC W ] or SPC W [, keep tapping ] or [ to cycle tabs
+;; without the leader. Any other key leaves the loop and runs as usual.
+(defvar-keymap rush-tab-repeat-map
+  :doc "Keep cycling tabs with ] and [."
+  :repeat t
+  "]" #'tab-next
+  "[" #'tab-previous)
+
+(repeat-mode 1)
 
 (provide 'rush-tabs)
 ;;; rush-tabs.el ends here
