@@ -31,6 +31,43 @@
 
 (defvar rush-compprog--server nil)
 
+(defvar rush-compprog--last-dir nil
+  "Directory of the most recently parsed problem.")
+
+(defun rush-compprog-cplog-links ()
+  "Prompt once for a solution file and return the notes | code link line."
+  (let* ((dir (or rush-compprog--last-dir rush-compprog-directory))
+         (file (read-file-name "Solution: " dir nil t
+                               (and rush-compprog--last-dir "main.cpp")))
+         (base (file-name-sans-extension (file-relative-name file default-directory))))
+    (format "[[file:%s.org][notes]] | [[file:%s.cpp][code]]" base base)))
+
+(declare-function org-back-to-heading "org")
+(declare-function org-get-heading "org")
+
+(defun rush-compprog-cpnote-header ()
+  "Return the title and link lines for the CP note in this buffer.
+The title is taken from the log.org entry whose notes link points here,
+so run `cplog' first and open the note from its link."
+  (let* ((note (or buffer-file-name (user-error "Not visiting a file")))
+         (root (or (locate-dominating-file note "log.org")
+                   (user-error "No log.org above %s" note)))
+         (log (expand-file-name "log.org" root))
+         (target (format "[[file:%s.org]"
+                         (file-name-sans-extension (file-relative-name note root))))
+         (title (with-current-buffer (find-file-noselect log)
+                  (save-excursion
+                    (save-restriction
+                      (widen)
+                      (goto-char (point-min))
+                      (when (search-forward target nil t)
+                        (org-back-to-heading t)
+                        (org-get-heading t t t t))))))
+         (title (or title (read-string "Log heading (Source :: Problem): "))))
+    (format "#+TITLE: %s\n[[file:%s::*%s][log entry]] | [[file:%s.cpp][solution]]"
+            title (file-relative-name log (file-name-directory note))
+            title (file-name-base note))))
+
 ;;; receiving problems
 
 (defun rush-compprog--slug (s)
@@ -60,6 +97,7 @@
            (tests (expand-file-name "test" dir))
            (src (expand-file-name "main.cpp" dir))
            (fresh (not (file-exists-p src))))
+      (setq rush-compprog--last-dir dir)
       (make-directory tests t)
       (seq-do-indexed
        (lambda (test i)

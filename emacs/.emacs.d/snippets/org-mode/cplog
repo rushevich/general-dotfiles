@@ -9,5 +9,5 @@ SCHEDULED: `(format-time-string "<%Y-%m-%d %a>" (time-add nil (* 7 24 60 60)))`
 :TIME:     ${6:60}m
 :FELT:     ${7:$$(yas-choose-value '("1" "2" "3" "4" "5"))}
 :END:
-[[file:${8:usaco/name}.org][notes]] | [[file:$8.cpp][code]]
+`(rush-compprog-cplog-links)`
 $0

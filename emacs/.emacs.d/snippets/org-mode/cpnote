@@ -2,8 +2,7 @@
 # name: CP problem note
 # key: cpnote
 # --
-#+TITLE: ${1:USACO} :: ${2:Problem}
-[[file:`(file-relative-name (expand-file-name "log.org" (locate-dominating-file default-directory "log.org")))`::*$1 :: $2][log entry]] | [[file:${3:`(file-name-base (or (buffer-file-name) ""))`}.cpp][solution]]
+`(rush-compprog-cpnote-header)`
 
 * Explanation
 $0
